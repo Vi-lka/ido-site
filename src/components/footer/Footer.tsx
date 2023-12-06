@@ -4,14 +4,31 @@ import LogoSvg from "../LogoSvg";
 import { Skeleton } from "../ui/skeleton";
 import { ClientHydration } from "../providers/ClientHydration";
 import NavMenuF from "./NavMenuF";
+import { getMainPage } from "@/lib/queries/main-page";
+import { getContacts } from "@/lib/queries/contacts";
+import ErrorHandler from "../errors/ErrorHandler";
 
-export default function Footer({
-    tel,
-    email
-}: {
-    tel: string,
-    email: string
-}) {
+export default async function Footer() {
+
+    let name = "";
+
+    const [ dataResult, contactsResult ] = await Promise.allSettled([ getMainPage(), getContacts() ]);
+    if (dataResult.status === "rejected") {
+      name = "История края - история для края"
+    } else {
+      name = dataResult.value.name
+    }
+
+    if (contactsResult.status === "rejected")
+    return (
+      <ErrorHandler
+        error={contactsResult.reason as unknown}
+        place="Contacts"
+        notFound
+        goBack={false}
+      />
+    );
+
 
   return (
     <div className="font-Raleway w-full px-4 md:px-0 py-12 bg-grass text-white">
@@ -21,7 +38,7 @@ export default function Footer({
                     href={`/`}
                     className="relative h-[2.5rem] w-fit"
                 >
-                    <LogoSvg name={"История края - история для края"} isAdaptive className="logo-svg-white" />
+                    <LogoSvg name={name} isAdaptive className="logo-svg-white" />
                 </Link>
             </div>
             <div className="w-fit lg:block hidden">
@@ -34,8 +51,8 @@ export default function Footer({
                 </ClientHydration>
             </div>
             <div className="flex flex-col w-1/5 items-end justify-center gap-1">
-                <Link href={`tel:${tel}`} className="text-sm">{tel}</Link>
-                <Link href={`mailto:${email}`} className="text-sm">{email}</Link>
+                <Link href={`tel:${contactsResult.value.tel}`} className="text-sm">{contactsResult.value.tel}</Link>
+                <Link href={`mailto:${contactsResult.value.email}`} className="text-sm">{contactsResult.value.email}</Link>
             </div>
         </div>
     </div>

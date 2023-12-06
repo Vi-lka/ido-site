@@ -6,8 +6,19 @@ import NavSheet from "./NavSheet";
 import { ClientHydration } from "../providers/ClientHydration";
 import { Skeleton } from "../ui/skeleton";
 import { ThemeToggle } from "../providers/ThemeToggle";
+import { getMainPage } from "@/lib/queries/main-page";
 
-export default function Header() {
+export default async function Header() {
+
+  let name = "";
+
+  const [ dataResult ] = await Promise.allSettled([ getMainPage() ]);
+  if (dataResult.status === "rejected") {
+    name = "История края - история для края"
+  } else {
+    name = dataResult.value.name
+  }
+
   return (
     <div className="font-Raleway fixed z-50 w-full px-4 md:px-0 bg-background">
       <div className="mx-auto flex w-[95%] items-center justify-between py-8 md:w-[85%]">
@@ -16,7 +27,7 @@ export default function Header() {
             href={`/`}
             className="relative h-[2.5rem] w-fit"
           >
-            <LogoSvg name={"История края - история для края"} isAdaptive />
+            <LogoSvg name={name} isAdaptive />
           </Link>
         </div>
 

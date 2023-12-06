@@ -22,6 +22,8 @@ module.exports = {
     extend: {
       colors: {
         grass: "hsl(var(--grass))",
+        lightGrass: "hsl(var(--lightGrass))",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
