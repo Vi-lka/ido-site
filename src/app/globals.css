@@ -33,7 +33,7 @@
     --grass: 24 9.8% 10%;
     --lightGrass: 24 9.8% 10%;
 
-    --background: 20 14.3% 4.1%;
+    --background: 0 0% 13%;
     --foreground: 0 0% 95%;
     --card: 24 9.8% 10%;
     --card-foreground: 0 0% 95%;
@@ -101,4 +101,43 @@ html.dark .logo-svg path {
 
 .object:hover p {
   text-decoration-line: underline;
+}
+
+.btn-shine {
+  position: relative;
+}
+.btn-shine:before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid white;
+  border-radius: inherit;
+  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  opacity: 0;
+  transform: scale(0.95);
+  will-change: opacity, transform;
+  background-image: linear-gradient(-45deg, transparent 30%, rgba(255, 255, 255, 0.4), transparent 70%);
+  background-size: 600%;
+  animation-duration: 6s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.btn-shine.active:before, .btn-shine:focus:before, .btn-shine:hover:before {
+  opacity: 1;
+  transform: scale(1);
+  animation-name: animation-shine;
+}
+@keyframes animation-shine {
+  0% {
+    background-position: 100%;
+ }
+  30% {
+    background-position: 0%;
+ }
+  100% {
+    background-position: 0%;
+ }
 }

@@ -2,6 +2,7 @@ import ErrorHandler from "@/components/errors/ErrorHandler";
 import { getMainPage } from "@/lib/queries/main-page";
 import BooksSvg from '@/components/BooksSvg';
 import Events from "./(mainPage)/Events";
+import Books from "./(mainPage)/Books";
 
 export default async function Home() {
 
@@ -25,6 +26,8 @@ export default async function Home() {
       </section>
 
       <Events />
+
+      <Books />
     </main>
   )
 }

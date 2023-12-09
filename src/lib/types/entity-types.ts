@@ -72,7 +72,8 @@ export const Event = z.object({
     additionalImages: ImagesArray.optional(),
     category: z.object({
       data: EventsCategory.nullable()
-    }).optional()
+    }).optional(),
+    text: z.any(),
   }),
 });
 export type Event = z.infer<typeof Event>;
@@ -86,3 +87,25 @@ export const Events = z.object({
   data: Event.array(),
 });
 export type Events = z.infer<typeof Events>;
+
+//.........................BOOKS.........................//
+export const Book = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    image: Image,
+    text: z.any(),
+    file: Image,
+  }),
+});
+export type Book = z.infer<typeof Book>;
+
+export const Books = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: Event.array(),
+});
+export type Books = z.infer<typeof Books>;

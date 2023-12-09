@@ -36,8 +36,6 @@ export default function ImgItem(props: Props) {
     }
   }, [image]);
 
-
-
   return (
     <Link
       href={props.href}
