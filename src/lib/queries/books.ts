@@ -141,8 +141,6 @@ export const getBooks = async ({
 
   const json = (await res.json()) as { data: { books: Books }; };
 
-  console.log(json)
-
   if (
     json.data.books.meta.pagination.total === 0 ||
     json.data.books.data.length === 0

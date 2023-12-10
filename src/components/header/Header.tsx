@@ -22,7 +22,7 @@ export default async function Header() {
   return (
     <div className="font-Raleway fixed z-50 w-full px-4 md:px-0 bg-background">
       <div className="mx-auto flex w-[95%] items-center justify-between py-8 md:w-[85%]">
-        <div className="flex w-1/5">
+        <div className="flex w-1/6">
           <Link
             href={`/`}
             className="relative h-[2.5rem] w-fit"
@@ -45,7 +45,7 @@ export default async function Header() {
           </ClientHydration>
         </div>
 
-        <div className="flex w-1/5 items-center justify-end gap-2 xl:gap-3">
+        <div className="flex w-1/6 items-center justify-end gap-2 xl:gap-3">
           <ClientHydration
             fallback={
               <div className="mr-2 flex gap-6">
