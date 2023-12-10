@@ -64,6 +64,11 @@
   }
 }
 
+.hero {
+  height: 80vh;
+  height: 80dvh;
+}
+
 html.dark .logo-svg path {
   fill: #ffffff;
   transition: 0.15s ease-in-out;
