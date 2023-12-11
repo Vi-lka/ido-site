@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  ido-site:
+    container_name: ido-site
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+        NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL}
+        NEXT_PUBLIC_STRAPI_DOMAIN: ${NEXT_PUBLIC_STRAPI_DOMAIN}
+        REVALIDATE_TOKEN: ${REVALIDATE_TOKEN}
+    restart: always
+    volumes:
+      - next_cache:/app/.next/cache
+    ports:
+      - 3000:3000
+    networks:
+      - ido
+
+  # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  ido:
+    name: ido
+    external: true
+
+volumes:
+  next_cache:
+    external: true
