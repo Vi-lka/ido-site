@@ -104,10 +104,6 @@ html.dark .logo-svg path {
   outline: none;
 }
 
-.object:hover p {
-  text-decoration-line: underline;
-}
-
 .btn-shine {
   position: relative;
 }
@@ -145,4 +141,14 @@ html.dark .logo-svg path {
   100% {
     background-position: 0%;
  }
+}
+
+.li-elem:hover .li-svg,
+.li-elem:focus .li-svg {
+  scale: 1.15
+}
+
+.li-elem:hover .li-title,
+.li-elem:focus .li-title {
+  color: hsl(var(--ring))
 }

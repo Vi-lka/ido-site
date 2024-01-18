@@ -3,6 +3,7 @@ import { getMainPage } from "@/lib/queries/main-page";
 import BooksSvg from '@/components/BooksSvg';
 import Events from "./(mainPage)/Events";
 import Books from "./(mainPage)/Books";
+import Methodologicals from "./(mainPage)/Methodologicals";
 
 export default async function Home() {
 
@@ -28,6 +29,8 @@ export default async function Home() {
       <Events />
 
       <Books />
+
+      <Methodologicals />
     </main>
   )
 }

@@ -94,7 +94,7 @@ export const Book = z.object({
   attributes: z.object({
     title: z.string(),
     image: Image,
-    text: z.any(),
+    text: z.any().nullable(),
     file: Image,
   }),
 });
@@ -106,6 +106,40 @@ export const Books = z.object({
       total: z.number(),
     }),
   }),
-  data: Event.array(),
+  data: z.object({
+    id: z.string(),
+    attributes: z.object({
+      title: z.string(),
+      image: Image,
+    }),
+  }).array(),
 });
 export type Books = z.infer<typeof Books>;
+
+//.........................BOOKS.........................//
+export const Methodological = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    image: Image,
+    description: z.string().nullable(),
+  }),
+});
+export type Methodological = z.infer<typeof Methodological>;
+
+export const Methodologicals = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: z.object({
+    id: z.string(),
+    attributes: z.object({
+      title: z.string(),
+      image: Image,
+      description: z.string().nullable(),
+    }),
+  }).array(),
+});
+export type Methodologicals = z.infer<typeof Methodologicals>;
