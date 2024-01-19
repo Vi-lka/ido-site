@@ -41,6 +41,28 @@ export const Contacts = z.object({
 });
 export type Contacts = z.infer<typeof Contacts>;
 
+//.........................BOOKS CATEGORIES.........................//
+export const BooksCategory = z.object({
+  id: z.string(),
+  attributes: z.object({
+    slug: z.string(),
+    title: z.string(),
+    image: Image,
+    description: z.string().nullable(),
+  }),
+});
+export type BooksCategory = z.infer<typeof BooksCategory>;
+
+export const BooksCategories = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: BooksCategory.array(),
+});
+export type BooksCategories = z.infer<typeof BooksCategories>;
+
 //.........................EVENTS CATEGORIES.........................//
 export const EventsCategory = z.object({
   id: z.string(),

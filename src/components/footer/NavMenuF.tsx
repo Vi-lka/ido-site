@@ -1,9 +1,8 @@
 "use client";
 
 import React from 'react'
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '../ui/navigation-menu'
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '../ui/navigation-menu'
 import Link from 'next/link'
-import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
 export default function NavMenu() {
@@ -48,10 +47,7 @@ function NavMenuItem({
     <NavigationMenuItem className='px-[0.1rem]'>
       <Link href={url} legacyBehavior passHref>
         <NavigationMenuLink
-          className={cn(
-            navigationMenuTriggerStyle(),
-            "bg-transparent px-3"
-          )}
+          className="bg-transparent px-3"
           active={('/' + pathCurrentPage) === url}
           target={blank ? "_blank" : "_self"}
         >

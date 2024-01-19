@@ -15,6 +15,7 @@ export default async function BooksContent({
   const per = searchParams["per"] ?? defaultPageSize;
   const sort = searchParams["sort"] as string | undefined;
   const search = searchParams["search"] as string | undefined;
+  const category = searchParams["category"] as string | undefined;
 
   const [dataResult] = await Promise.allSettled([
     getBooks({
@@ -22,6 +23,7 @@ export default async function BooksContent({
       per: Number(per),
       sort,
       search,
+      category
     }),
   ]);
   if (dataResult.status === "rejected")
@@ -38,7 +40,7 @@ export default async function BooksContent({
     <>
       <div
         key={Math.random()}
-        className="mx-auto mb-12 mt-3 grid w-[85%] grid-cols-1 gap-6 md:w-full md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[3000px]:grid-cols-5 min-[4000px]:grid-cols-6"
+        className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-6 md:w-full md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[3000px]:grid-cols-5 min-[4000px]:grid-cols-6"
       >
         {dataResult.value.data.map(book => (
           <ImgItem

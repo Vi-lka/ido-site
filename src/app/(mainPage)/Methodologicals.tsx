@@ -37,7 +37,7 @@ export default async function Methodologicals() {
                     fill={false}
                     width={65}
                     height={65}
-                    className="lg:w-[65px] w-[55px] aspect-square object-cover overflow-hidden rounded-full transition-all"
+                    className="lg:w-[65px] w-[55px] lg:h-[65px] h-[55px] aspect-square object-cover overflow-hidden rounded-full transition-all"
                     alt={item.attributes.title}
                     priority 
                   />

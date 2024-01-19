@@ -57,11 +57,11 @@ export default function ImageComponent(props: Props) {
   );
 }
 
-export const bgWhiteTheme = "#f0edeb";
-export const shimmerWhiteTheme = "#e9e5e2";
+export const bgWhiteTheme = "#ffffff";
+export const shimmerWhiteTheme = "#ededed";
 
-export const bgBlackTheme = "#29293d";
-export const shimmerBlackTheme = "#2d2d43";
+export const bgBlackTheme = "#212121";
+export const shimmerBlackTheme = "#292929";
 
 export const shimmer = (w: number, h: number, theme: string | undefined) => `
       <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
