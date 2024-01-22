@@ -10,6 +10,7 @@ import { Loader2 } from 'lucide-react';
 
 export default function ContentTabs({
     data,
+    title,
     children
 }: {
     data: {
@@ -18,6 +19,7 @@ export default function ContentTabs({
         description: string | null,
         image: string | undefined,
     }[],
+    title: string,
     children: React.ReactNode
 }) {
 
@@ -85,7 +87,7 @@ export default function ContentTabs({
                 defaultValue={category}
                 onValueChange={(value) => handleChangeTab(value)}
             >
-                <p className='lg:text-sm text-xs mb-3'>Тип ресурса:</p>
+                <p className='lg:text-sm text-xs mb-3'>{title}:</p>
                 <TabsList className='w-full h-fit flex justify-around flex-wrap'>
                     <TabsTrigger  
                         value={""}

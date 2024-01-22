@@ -20,8 +20,8 @@ export default async function Header() {
   }
 
   return (
-    <div className="font-Raleway fixed z-50 w-full px-4 md:px-0 bg-background">
-      <div className="mx-auto flex w-[95%] items-center justify-between py-8 md:w-[85%]">
+    <div className="font-Raleway fixed z-50 w-full px-4 md:px-0 bg-background border-b-2 border-accent">
+      <div className="mx-auto flex w-[95%] items-center justify-between md:py-8 py-4 md:w-[85%]">
         <div className="flex w-1/6">
           <Link
             href={`/`}

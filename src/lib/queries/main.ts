@@ -59,6 +59,7 @@ export const getPageDescriptions = async (): Promise<PageDescriptions> => {
         data {
           attributes {
             library
+            events
           }
         }
       }

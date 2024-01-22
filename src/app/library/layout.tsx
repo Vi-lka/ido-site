@@ -7,7 +7,7 @@ export default function BooksLayout({
 }) {
   return (
     <main className="flex flex-col gap-1 mt-12 mx-auto w-[95%] md:w-[85%] px-4 max-w-[2000px]">
-        {children}
+      {children}
     </main>
   )
 }

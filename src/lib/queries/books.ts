@@ -14,6 +14,14 @@ export const getBookByID = async ({
           id
           attributes {
             title
+            category {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
             image {
               data {
                 attributes {

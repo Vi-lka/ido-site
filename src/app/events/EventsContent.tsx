@@ -1,3 +1,4 @@
+import PaginationControls from "@/components/content/PaginationControls";
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import ImgItem from "@/components/thumbnails/ImgItem";
 import { getEvents } from "@/lib/queries/events";
@@ -15,6 +16,7 @@ export default async function EventsContent({
   const per = searchParams["per"] ?? defaultPageSize;
   const sort = searchParams["sort"] as string | undefined;
   const search = searchParams["search"] as string | undefined;
+  const category = searchParams["category"] as string | undefined;
 
   const [dataResult] = await Promise.allSettled([
     getEvents({
@@ -22,23 +24,32 @@ export default async function EventsContent({
       per: Number(per),
       sort,
       search,
+      category
     }),
   ]);
   if (dataResult.status === "rejected")
     return (
-      <ErrorHandler
-        error={dataResult.reason as unknown}
-        place="Events"
-        notFound
-        goBack={false}
-      />
+      <>
+        <ErrorHandler
+          error={dataResult.reason as unknown}
+          place="Events"
+          notFound
+          goBack={false}
+        />
+        <div className="mb-24 mt-6">
+          <PaginationControls
+            length={1}
+            defaultPageSize={defaultPageSize}
+          />
+        </div>
+      </>
     );
 
   return (
     <>
       <div
         key={Math.random()}
-        className="mx-auto mb-12 mt-3 grid w-[85%] grid-cols-1 gap-6 md:w-full md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[3000px]:grid-cols-5 min-[4000px]:grid-cols-6"
+        className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-6 md:w-full md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[3000px]:grid-cols-5 min-[4000px]:grid-cols-6"
       >
         {dataResult.value.data.map(event => (
           <ImgItem
@@ -48,6 +59,12 @@ export default async function EventsContent({
             title={event.attributes.title}
           />
         ))}
+      </div>
+      <div className="mb-24 mt-6">
+        <PaginationControls
+          length={dataResult.value.meta.pagination.total}
+          defaultPageSize={defaultPageSize}
+        />
       </div>
     </>
   );

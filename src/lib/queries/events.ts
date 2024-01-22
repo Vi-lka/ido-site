@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Event, Events } from "../types/entity-types";
+import { Event, Events, EventsCategories } from "../types/entity-types";
 
 export const getEventByID = async ({
   id,
@@ -85,11 +85,13 @@ export const getEvents = async ({
   per,
   sort = "order:asc",
   search = "",
+  category = ""
 }: {
   page: number;
   per: number;
   sort?: string;
   search?: string;
+  category?: string;
 }): Promise<Events> => {
   const headers = { "Content-Type": "application/json" };
   const query = /* GraphGL */ `
@@ -104,6 +106,11 @@ export const getEvents = async ({
             title: {
               containsi: "${search}"
             },
+            category: {
+              slug: {
+                containsi: "${category}"
+              }
+            }
           }
       ) {
         meta {
@@ -160,4 +167,77 @@ export const getEvents = async ({
   const events = Events.parse(json.data.events);
   
   return events;
+};
+
+export const getEventsCategories = async ({
+  search = "",
+}: {
+  search?: string;
+}): Promise<EventsCategories> => {
+  const headers = { "Content-Type": "application/json" };
+  const query = /* GraphGL */ `
+    query EventsCategories {
+      eventsCategories(
+          filters: {
+            title: {
+              containsi: "${search}"
+            },
+          }
+      ) {
+        meta {
+          pagination {
+            total
+          }
+        }
+        data {
+          id
+          attributes {
+            slug
+            title
+            description
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    next: {
+      tags: ["strapi"],
+      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      revalidate: 60,
+    },
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Events Categories'");
+  }
+
+  const json = (await res.json()) as { data: { eventsCategories: EventsCategories }; };
+
+  if (
+    json.data.eventsCategories.meta.pagination.total === 0 ||
+    json.data.eventsCategories.data.length === 0
+  ) {
+    notFound();
+  }
+  
+  const eventsCategories = EventsCategories.parse(json.data.eventsCategories);
+  
+  return eventsCategories;
 };

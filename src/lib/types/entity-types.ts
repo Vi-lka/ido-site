@@ -36,7 +36,8 @@ export type MainPage = z.infer<typeof MainPage>;
 
 //.........................PAGE DESCRIPTION.........................//
 export const PageDescriptions = z.object({
-  library: z.any()
+  library: z.any(),
+  events: z.any(),
 });
 export type PageDescriptions = z.infer<typeof PageDescriptions>;
 
@@ -122,6 +123,14 @@ export const Book = z.object({
   id: z.string(),
   attributes: z.object({
     title: z.string(),
+    category: z.object({
+      data: z.object({
+        attributes: z.object({
+          slug: z.string(),
+          title: z.string()
+        })
+      }).nullable()
+    }),
     image: Image,
     text: z.any().nullable(),
     file: Image,

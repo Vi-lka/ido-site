@@ -39,7 +39,7 @@ export default async function LibraryPage({
       </div>
       {tabsData
         ? (
-        <ContentTabs data={tabsData}>
+        <ContentTabs data={tabsData} title='Раздел'>
             <Suspense fallback={
               <div className="mx-auto w-[85%] max-w-[1600px] pt-20">
                 <Loader2 className="mx-auto h-12 w-12 animate-spin" />
