@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import Providers from '@/components/providers/Providers';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
-import { getMainPage } from '@/lib/queries/main-page';
+import { getMainPage } from '@/lib/queries/main';
 
 const raleway = Raleway({
   subsets: ["cyrillic", "latin"],

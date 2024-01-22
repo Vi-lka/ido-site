@@ -6,7 +6,7 @@ import NavSheet from "./NavSheet";
 import { ClientHydration } from "../providers/ClientHydration";
 import { Skeleton } from "../ui/skeleton";
 import { ThemeToggle } from "../providers/ThemeToggle";
-import { getMainPage } from "@/lib/queries/main-page";
+import { getMainPage } from "@/lib/queries/main";
 
 export default async function Header() {
 

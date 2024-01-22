@@ -34,6 +34,13 @@ export const MainPage = z.object({
 });
 export type MainPage = z.infer<typeof MainPage>;
 
+//.........................PAGE DESCRIPTION.........................//
+export const PageDescriptions = z.object({
+  library: z.any()
+});
+export type PageDescriptions = z.infer<typeof PageDescriptions>;
+
+
 //.........................CONTACTS.........................//
 export const Contacts = z.object({
   tel: z.string().nullable(),

@@ -1,9 +1,10 @@
+import PaginationControls from "@/components/content/PaginationControls";
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import ImgItem from "@/components/thumbnails/ImgItem";
 import { getBooks } from "@/lib/queries/books";
 import React from "react";
 
-export default async function BooksContent({
+export default async function LibraryContent({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -28,12 +29,20 @@ export default async function BooksContent({
   ]);
   if (dataResult.status === "rejected")
     return (
-      <ErrorHandler
-        error={dataResult.reason as unknown}
-        place="Library"
-        notFound
-        goBack={false}
-      />
+      <>
+        <ErrorHandler
+          error={dataResult.reason as unknown}
+          place="Library"
+          notFound
+          goBack={false}
+        />
+        <div className="mb-24 mt-6">
+          <PaginationControls
+            length={1}
+            defaultPageSize={defaultPageSize}
+          />
+        </div>
+      </>
     );
 
   return (
@@ -50,6 +59,12 @@ export default async function BooksContent({
             title={book.attributes.title}
           />
         ))}
+      </div>
+      <div className="mb-24 mt-6">
+        <PaginationControls
+          length={dataResult.value.meta.pagination.total}
+          defaultPageSize={defaultPageSize}
+        />
       </div>
     </>
   );

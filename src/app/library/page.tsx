@@ -1,17 +1,22 @@
 import React, { Suspense } from 'react'
-import BooksContent from './BooksContent';
-import ContentTabs from '@/components/content-tabs/ContentTabs';
+import LibraryContent from './LibraryContent';
+import ContentTabs from '@/components/content/ContentTabs';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getBooksCategories } from '@/lib/queries/books';
-import { HelpCircle, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { getPageDescriptions } from '@/lib/queries/main';
+import PageDescriptions from '@/components/content/PageDescriptions';
 
-export default async function BooksPage({
+export default async function LibraryPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
-  const [ dataResult ] = await Promise.allSettled([ getBooksCategories({}) ]);
+  const [ dataResult, pageDescriptions ] = await Promise.allSettled([ 
+    getBooksCategories({}),
+    getPageDescriptions()
+  ]);
 
   const tabsData = dataResult.status !== "rejected" ? 
     dataResult.value.data.map(item => {
@@ -29,7 +34,8 @@ export default async function BooksPage({
         <h1 className="text-foreground lg:text-4xl text-3xl font-NotoSerif font-bold">
           Библиотека
         </h1>
-        <HelpCircle />
+        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+        {(pageDescriptions.status !== "rejected" && pageDescriptions.value.library) && <PageDescriptions data={pageDescriptions.value.library} />}
       </div>
       {tabsData
         ? (
@@ -39,7 +45,7 @@ export default async function BooksPage({
                 <Loader2 className="mx-auto h-12 w-12 animate-spin" />
               </div>
             }>
-              <BooksContent searchParams={searchParams} />
+              <LibraryContent searchParams={searchParams} />
             </Suspense>
           </ContentTabs>
         )
@@ -57,7 +63,7 @@ export default async function BooksPage({
               <Loader2 className="mx-auto h-12 w-12 animate-spin" />
             </div>
           }>
-            <BooksContent searchParams={searchParams} />
+            <LibraryContent searchParams={searchParams} />
           </Suspense>
         </>)
       }

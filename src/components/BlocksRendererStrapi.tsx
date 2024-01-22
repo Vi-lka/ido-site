@@ -2,6 +2,8 @@
 
 import React from 'react'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import Link from 'next/link';
+import ImageComponent from './thumbnails/ImageComponent';
 
 interface TextInlineNode {
     type: 'text';
@@ -78,6 +80,60 @@ export default function BlocksRendererStrapi({
     content: any
 }) {
   return (
-    <BlocksRenderer content={content as RootNode[]} />
+    <BlocksRenderer 
+        content={content as RootNode[]}
+        blocks={{
+            paragraph: ({ children }) => <p className="my-2 md:text-base text-sm">{children}</p>,
+            heading: ({ children, level }) => {
+              switch (level) {
+                case 1:
+                  return <article className="prose lg:prose-xl mb-3"><h1 className='font-NotoSerif text-foreground'>{children}</h1></article>
+                case 2:
+                  return <article className="prose lg:prose-xl mb-3"><h2 className='font-Raleway text-foreground'>{children}</h2></article>
+                case 3:
+                  return <article className="prose lg:prose-xl mb-3"><h3 className='font-Raleway text-foreground'>{children}</h3></article>
+                case 4:
+                  return <article className="prose lg:prose-xl mb-3"><h4 className='font-Raleway text-foreground'>{children}</h4></article>
+                case 5:
+                  return <article className="prose lg:prose-xl mb-3"><h5 className='font-Raleway text-foreground'>{children}</h5></article>
+                case 6:
+                  return <article className="prose lg:prose-xl mb-3"><h6 className='font-Raleway text-foreground'>{children}</h6></article>
+                default:
+                  return <article className="prose lg:prose-xl mb-3"><h1 className='font-Raleway text-foreground'>{children}</h1></article>
+              }
+            },
+            list: ({ children, format }) => {
+              switch (format) {
+                case "ordered":
+                  return <ol className='list-decimal mb-3 pl-4 flex flex-col gap-1.5'>{children}</ol>
+                case "unordered":
+                  return <ul className='list-disc mb-3 pl-4 flex flex-col gap-1.5'>{children}</ul>
+                default:
+                  return <ul className='list-disc mb-3 pl-4 flex flex-col gap-1.5'>{children}</ul>
+              }
+            },
+            quote: ({ children }) => {
+              return (
+                <article className="prose lg:prose-xl">
+                  <blockquote className='text-foreground font-NotoSerif text-base'>
+                    <p>{children}</p>
+                  </blockquote>
+                </article>
+              )
+            },
+            link: ({ children, url }) => <Link href={url} target='__blank' className='text-primary underline underline-offset-2'>{children}</Link>,
+            image: ({ image }) => (
+              <ImageComponent
+                src={"/uploads/" + image.hash + image.ext}
+                fill={false}
+                width={image.width < 1000 ? image.width : 450}
+                height={image.height < 1000 ? image.height : 450}
+                className="aspect-[5/4] object-contain w-full overflow-hidden rounded-md"
+                alt={image.alternativeText ? image.alternativeText : ""}
+                priority
+              />
+            )
+        }}
+    />
   )
 }

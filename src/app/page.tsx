@@ -1,5 +1,5 @@
 import ErrorHandler from "@/components/errors/ErrorHandler";
-import { getMainPage } from "@/lib/queries/main-page";
+import { getMainPage } from "@/lib/queries/main";
 import BooksSvg from '@/components/BooksSvg';
 import Events from "./(mainPage)/Events";
 import Books from "./(mainPage)/Books";

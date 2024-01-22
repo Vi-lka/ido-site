@@ -28,17 +28,25 @@ export default function ContentTabs({
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
-  
+
     const category = searchParams.get("category") ?? undefined;
 
     const handleChangeTab = React.useCallback(
         (value: string) => {
             setTab(value);
             const params = new URLSearchParams(window.location.search);
-            params.set("category", value);
-            startTransition(() => {
-                router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-            })
+
+            if (value.length > 0) {
+                params.set("category", value);
+                startTransition(() => {
+                    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+                })
+            } else {
+                params.delete("category");
+                startTransition(() => {
+                    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+                })
+            }
         },
         [pathname, router, setTab],
     );
@@ -46,15 +54,23 @@ export default function ContentTabs({
     const handlePrefetchTab = React.useCallback(
         (value: string) => {
             const params = new URLSearchParams(window.location.search);
-            params.set("category", value);
-            router.prefetch(`${pathname}?${params.toString()}`);
+
+            if (value.length > 0) {
+                params.set("category", value);
+                router.prefetch(`${pathname}?${params.toString()}`);              
+            } else {
+                params.delete("category");
+                router.prefetch(`${pathname}?${params.toString()}`);
+            }
         },
         [pathname, router],
     );
 
     React.useEffect(() => {
-        if ((category === undefined || category.length > 0) && data.length > 0) {
-            handleChangeTab(data[0].slug)
+        if ((category === undefined || category.length === 0)) {
+            handleChangeTab("")
+        } else {
+            setTab(category)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -64,13 +80,25 @@ export default function ContentTabs({
     return (
         <>
             <Tabs 
-                className="w-full"
+                className="w-full font-Raleway"
                 value={tab}
+                defaultValue={category}
                 onValueChange={(value) => handleChangeTab(value)}
             >
+                <p className='lg:text-sm text-xs mb-3'>Тип ресурса:</p>
                 <TabsList className='w-full h-fit flex justify-around flex-wrap'>
+                    <TabsTrigger  
+                        value={""}
+                        disabled={isPending}
+                        className='font-Raleway text-base py-2 px-6 border-[1px] border-transparent data-[state=active]:border-primary cursor-pointer'
+                        onMouseEnter={() => handlePrefetchTab("")}
+                    >
+                        <p className={cn(isPending ? "pointer-events-none cursor-progress opacity-50" : "")}>
+                            Все
+                        </p>
+                    </TabsTrigger>
                     {data.map(item => 
-                        <HoverCard key={item.slug} openDelay={300} closeDelay={150}>
+                        <HoverCard key={item.slug} openDelay={150} closeDelay={100}>
                             <TabsTrigger  
                                 asChild
                                 value={item.slug}
