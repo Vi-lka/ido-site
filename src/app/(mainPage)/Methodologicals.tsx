@@ -3,7 +3,7 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import ImageComponent from '@/components/thumbnails/ImageComponent';
 import { Button } from '@/components/ui/button';
 import { getMethodologicals } from '@/lib/queries/methodological';
-import getShortDescription from '@/lib/utils';
+import { getShortDescription } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react'
 

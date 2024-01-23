@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import React from 'react'
-import Image from "next/image";
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import { getBookByID } from '@/lib/queries/books';
 import Link from 'next/link';
 import { ArrowUpRightFromSquare } from 'lucide-react';
 import GoBackButton from '@/components/GoBackButton';
+import ImageComponent from '@/components/thumbnails/ImageComponent';
 
 export default async function BookSingle({
   params: { id },
@@ -73,11 +73,12 @@ export default async function BookSingle({
 
       <div className="">
         {dataResult.value.attributes.image.data && (
-          <Image
+          <ImageComponent
             src={dataResult.value.attributes.image.data.attributes.url}
-            priority={true}
+            fill={false}
             width={650}
             height={650}
+            priority
             className="lg:float-right lg:m-6 mx-auto my-6 lg:w-1/2 w-auto max-h-[70vh] overflow-hidden rounded-md object-contain"
             alt={dataResult.value.attributes.title}
           />

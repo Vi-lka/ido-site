@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export default function getShortDescription(
+export function getShortDescription(
   description: string,
   length?: number,
 ) {
@@ -17,4 +17,11 @@ export default function getShortDescription(
   if (array.length >= sliceLength + 1) {
     return array.slice(0, sliceLength).join(" ") + "...";
   } else return array.join(" ");
+}
+
+export function getDateName({ day, month, year }: { day: number, month: number, year: number }): string {
+  const date = new Date(year, month-1, day);
+  const dateName = date.toLocaleString('ru', { day: "numeric", month: 'long', year: "numeric" });
+
+  return dateName
 }

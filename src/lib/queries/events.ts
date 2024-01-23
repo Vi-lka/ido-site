@@ -14,7 +14,18 @@ export const getEventByID = async ({
           id
           attributes {
             title
+            date {
+              day month year
+            }
+            description
             image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            additionalImages {
               data {
                 attributes {
                   url
@@ -28,6 +39,7 @@ export const getEventByID = async ({
                 attributes {
                   slug
                   title
+                  description
                   image {
                     data {
                       attributes {
@@ -35,7 +47,6 @@ export const getEventByID = async ({
                       }
                     }
                   }
-                  description
                 }
               }
             }
@@ -106,11 +117,13 @@ export const getEvents = async ({
             title: {
               containsi: "${search}"
             },
-            category: {
-              slug: {
-                containsi: "${category}"
+            ${category && `
+              category: {
+                slug: {
+                  containsi: "${category}"
+                }
               }
-            }
+            `}
           }
       ) {
         meta {
@@ -122,10 +135,31 @@ export const getEvents = async ({
           id
           attributes {
             title
+            date {
+              day month year
+            }
+            description
             image {
               data {
                 attributes {
                   url
+                }
+              }
+            }
+            category {
+              data {
+                id
+                attributes {
+                  slug
+                  title
+                  description
+                  image {
+                    data {
+                      attributes {
+                        url
+                      }
+                    }
+                  }
                 }
               }
             }

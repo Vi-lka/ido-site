@@ -98,11 +98,17 @@ export const Event = z.object({
   id: z.string(),
   attributes: z.object({
     title: z.string(),
+    date: z.object({
+      day: z.number(),
+      month: z.number(),
+      year: z.number()
+    }),
+    description: z.string(),
     image: Image,
     additionalImages: ImagesArray.optional(),
     category: z.object({
       data: EventsCategory.nullable()
-    }).optional(),
+    }),
     text: z.any(),
   }),
 });

@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { Repeat } from "lucide-react";
 import type { ZodIssue } from "zod";
 import { useToast } from "../ui/use-toast";
-import getShortDescription from "@/lib/utils";
 import { ToastAction } from "@radix-ui/react-toast";
+import { getShortDescription } from "@/lib/utils";
 
 export default function ErrorToast({
   error,

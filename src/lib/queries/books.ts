@@ -104,11 +104,13 @@ export const getBooks = async ({
             title: {
               containsi: "${search}"
             },
-            category: {
-              slug: {
-                containsi: "${category}"
+            ${category && `
+              category: {
+                slug: {
+                  containsi: "${category}"
+                }
               }
-            }
+            `}
           }
       ) {
         meta {
