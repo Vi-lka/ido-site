@@ -1,5 +1,5 @@
-import ShelvesBooksSvg from '@/components/ShelvesBooksSvg';
 import ErrorHandler from '@/components/errors/ErrorHandler';
+import ShelvesBooksSvg from '@/components/svg/ShelvesBooksSvg';
 import { Button } from '@/components/ui/button';
 import { getBooks } from '@/lib/queries/books';
 import { BookOpenText } from 'lucide-react';

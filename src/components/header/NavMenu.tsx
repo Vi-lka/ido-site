@@ -41,8 +41,7 @@ function NavMenuItem({
     .split("/")
     .filter((v) => v.length > 0);
 
-  // Remove locale
-  const pathCurrentPage = (pathNestedRoutes[pathNestedRoutes.length - 1] === undefined) ? "/" : pathNestedRoutes[pathNestedRoutes.length - 1];
+  const pathCurrentPage = "/" + pathNestedRoutes[0];
 
   return (
     <NavigationMenuItem className='px-[0.1rem]'>
@@ -52,7 +51,7 @@ function NavMenuItem({
             navigationMenuTriggerStyle(),
             "bg-transparent px-3"
           )}
-          active={('/' + pathCurrentPage) === url}
+          active={pathCurrentPage === url}
           target={blank ? "_blank" : "_self"}
         >
           {text}

@@ -1,9 +1,10 @@
 import ErrorHandler from "@/components/errors/ErrorHandler";
 import { getMainPage } from "@/lib/queries/main";
-import BooksSvg from '@/components/BooksSvg';
 import Events from "./(mainPage)/Events";
 import Books from "./(mainPage)/Books";
 import Methodologicals from "./(mainPage)/Methodologicals";
+import WaveRedSvg from "@/components/svg/WaveRedSvg";
+import BooksSvg from "@/components/svg/BooksSvg";
 
 export default async function Home() {
 
@@ -29,6 +30,10 @@ export default async function Home() {
       <Events />
 
       <Books />
+
+      <div className="relative w-full">
+        <WaveRedSvg className="w-full absolute lg:-bottom-52 sm:-bottom-36 min-[2000px]:hidden sm:block hidden left-1/2 -translate-x-1/2 opacity-70 dark:opacity-[0.02] -z-10" />
+      </div>
 
       <Methodologicals />
     </main>

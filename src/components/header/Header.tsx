@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import LogoSvg from "../LogoSvg";
+import LogoSvg from "../svg/LogoSvg";
 import NavMenu from "./NavMenu";
 import NavSheet from "./NavSheet";
 import { ClientHydration } from "../providers/ClientHydration";

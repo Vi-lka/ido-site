@@ -13,6 +13,7 @@ type Props = {
   width?: number;
   height?: number;
   className?: string;
+  children?: React.ReactNode
 };
 
 
@@ -40,6 +41,7 @@ export default function ImgItem(props: Props) {
         <p className="font-Raleway text-sm font-normal lg:text-base">
           {props.title}
         </p>
+        {props.children}
       </div>
     </Link>
   );

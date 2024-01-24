@@ -33,10 +33,10 @@ export default function IconBooksSvg({
         <path opacity="0.4" d="M61.8024 14.6799H54.6055V128.088H61.8024V14.6799Z" fill="#086608"/>
         <path opacity="0.2" d="M54.6056 14.6799H47.4087V128.088H54.6056V14.6799Z" fill="#086608"/>
         <path d="M87 128.085L87 0.00512695L61.645 0.00512695L61.645 128.085H87Z" fill="#FA5738"/>
-        <path d="M67.8262 0V128.08" stroke="#DB4633" stroke-miterlimit="10"/>
-        <path d="M72.2456 0V128.08" stroke="#DB4633" stroke-miterlimit="10"/>
-        <path d="M76.4326 0V128.08" stroke="#DB4633" stroke-miterlimit="10"/>
-        <path d="M80.6201 0V128.08" stroke="#DB4633" stroke-miterlimit="10"/>
+        <path d="M67.8262 0V128.08" stroke="#DB4633" strokeMiterlimit="10"/>
+        <path d="M72.2456 0V128.08" stroke="#DB4633" strokeMiterlimit="10"/>
+        <path d="M76.4326 0V128.08" stroke="#DB4633" strokeMiterlimit="10"/>
+        <path d="M80.6201 0V128.08" stroke="#DB4633" strokeMiterlimit="10"/>
         <path opacity="0.3" d="M65.9653 30.8465V15.6468C65.9653 15.1997 66.4306 14.7527 66.8958 14.7527C67.361 14.7527 67.8263 15.1997 67.8263 15.6468V30.8465C67.8263 31.2936 67.361 31.7406 66.8958 31.7406C66.4306 31.7406 65.9653 31.2936 65.9653 30.8465Z" fill="#FFCCC5"/>
         <path opacity="0.4" d="M86.9006 0H78.9917V128.08H86.9006V0Z" fill="#AD1905"/>
         <path opacity="0.3" d="M79.2239 0H71.3149V128.08H79.2239V0Z" fill="#C12110"/>

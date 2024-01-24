@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import LogoSvg from "../LogoSvg";
+import LogoSvg from "../svg/LogoSvg";
 import { Skeleton } from "../ui/skeleton";
 import { ClientHydration } from "../providers/ClientHydration";
 import NavMenuF from "./NavMenuF";

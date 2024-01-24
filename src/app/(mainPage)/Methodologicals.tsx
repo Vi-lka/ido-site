@@ -1,5 +1,5 @@
-import IconBooksSvg from '@/components/IconBooksSvg';
 import ErrorHandler from '@/components/errors/ErrorHandler';
+import IconBooksSvg from '@/components/svg/IconBooksSvg';
 import ImageComponent from '@/components/thumbnails/ImageComponent';
 import { Button } from '@/components/ui/button';
 import { getMethodologicals } from '@/lib/queries/methodological';
