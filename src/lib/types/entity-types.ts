@@ -26,6 +26,35 @@ export const ImagesArray = z.object({
 });
 export type ImagesArray = z.infer<typeof ImagesArray>;
 
+//.........................COMPONENTS.........................//
+export const RichTextComp = z.object({
+  __typename: z.literal("ComponentCustomRichText"),
+  title: z.string().nullable(),
+  text: z.any(),
+})
+export type RichTextComp = z.infer<typeof RichTextComp>;
+
+export const SliderComp = z.object({
+  __typename: z.literal("ComponentCustomSlider"),
+  title: z.string().nullable(),
+  images: ImagesArray,
+})
+export type SliderComp = z.infer<typeof SliderComp>;
+
+export const VideoEmbedComp = z.object({
+  __typename: z.literal("ComponentCustomVideoEmbed"),
+  title: z.string().nullable(),
+  embed: z.string(),
+})
+export type VideoEmbedComp = z.infer<typeof VideoEmbedComp>;
+
+export const VideoComp = z.object({
+  __typename: z.literal("ComponentCustomVideo"),
+  title: z.string().nullable(),
+  video: Image,
+})
+export type VideoComp = z.infer<typeof VideoComp>;
+
 //.........................MAIN PAGE.........................//
 export const MainPage = z.object({
     name: z.string(),
@@ -38,6 +67,7 @@ export type MainPage = z.infer<typeof MainPage>;
 export const PageDescriptions = z.object({
   library: z.any(),
   events: z.any(),
+  news: z.any(),
 });
 export type PageDescriptions = z.infer<typeof PageDescriptions>;
 
@@ -160,7 +190,7 @@ export const Books = z.object({
 });
 export type Books = z.infer<typeof Books>;
 
-//.........................BOOKS.........................//
+//.........................METHODOLOGICAL.........................//
 export const Methodological = z.object({
   id: z.string(),
   attributes: z.object({
@@ -187,3 +217,33 @@ export const Methodologicals = z.object({
   }).array(),
 });
 export type Methodologicals = z.infer<typeof Methodologicals>;
+
+//.........................NEWS.........................//
+export const NewsSingle = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    image: Image,
+    date: z.string(),
+    text: z.any(),
+    content: z.union([RichTextComp, SliderComp, VideoEmbedComp, VideoComp]).array()
+  }),
+});
+export type NewsSingle = z.infer<typeof NewsSingle>;
+
+export const News = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: z.object({
+    id: z.string(),
+    attributes: z.object({
+      title: z.string(),
+      image: Image,
+      date: z.string(),
+    }),
+  }).array(),
+});
+export type News = z.infer<typeof News>;

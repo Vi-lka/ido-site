@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import React from 'react'
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
@@ -38,7 +37,6 @@ export default async function BookSingle({
           {dataResult.value.attributes.title}
         </h1>
       </div>
-
 
       <div className='flex items-center justify-between gap-3 w-full'>
         {category && (
@@ -86,6 +84,7 @@ export default async function BookSingle({
 
         {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
+            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
             <BlocksRendererStrapi content={dataResult.value.attributes.text} />
           </div>
         )}

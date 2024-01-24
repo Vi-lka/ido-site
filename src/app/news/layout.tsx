@@ -5,7 +5,7 @@ import WaveRedSvg from '@/components/svg/WaveRedSvg'
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-export default function BooksLayout({
+export default function NewsLayout({
   children,
 }: {
   children: React.ReactNode
