@@ -53,6 +53,19 @@ export const getNewByID = async ({
                   title
                   embed
                 }
+                ...on ComponentCustomFilesList {
+                  title
+                  list {
+                    name
+                    file {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }

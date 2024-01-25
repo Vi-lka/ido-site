@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
-import PhotoSlider from './PhotoSlider'
+import PhotoSlider from '../PhotoSlider'
 
 export default function SliderComponent({
     title,

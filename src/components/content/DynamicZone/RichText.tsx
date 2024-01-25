@@ -1,5 +1,5 @@
 import React from 'react'
-import BlocksRendererStrapi from '../BlocksRendererStrapi'
+import BlocksRendererStrapi from '../../BlocksRendererStrapi'
 import { cn } from '@/lib/utils'
 
 export default function RichText({

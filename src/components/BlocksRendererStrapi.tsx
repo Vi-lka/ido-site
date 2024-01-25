@@ -121,7 +121,11 @@ export default function BlocksRendererStrapi({
                 </article>
               )
             },
-            link: ({ children, url }) => <Link href={url} target='__blank' className='text-primary underline underline-offset-2'>{children}</Link>,
+            link: ({ children, url }) => (
+              <Link href={url} target='__blank' className='text-primary hover:underline underline-offset-2 transition-all'>
+                {children}
+              </Link>
+            ),
             image: ({ image }) => (
               <ImageComponent
                 src={"/uploads/" + image.hash + image.ext}

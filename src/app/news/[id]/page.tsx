@@ -1,9 +1,6 @@
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import GoBackButton from '@/components/GoBackButton';
-import EmbededHTML from '@/components/content/EmbededHTML';
-import RichText from '@/components/content/RichText';
-import SliderComponent from '@/components/content/SliderComponent';
-import VideoComponent from '@/components/content/VideoComponent';
+import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import ImageComponent from '@/components/thumbnails/ImageComponent';
 import { getNewByID } from '@/lib/queries/news';
@@ -36,7 +33,7 @@ export default async function NewsSingle({
     <>
       <div className="w-full flex flex-col justify-between gap-4 mt-3 relative md:flex-row border-b-2 border-foreground">
         <GoBackButton className="absolute -top-10 left-0 sm:-left-8 sm:top-0 lg:-left-12" />
-        <h1 className="text-foreground lg:text-3xl text-2xl font-NotoSerif font-bold pb-4 sm:mt-0 mt-3">
+        <h1 className="text-foreground lg:text-3xl sm:text-2xl text-xl font-NotoSerif font-bold pb-4 sm:mt-0 mt-3">
           {dataResult.value.attributes.title}
         </h1>
       </div>
@@ -69,27 +66,10 @@ export default async function NewsSingle({
       </div>
 
       <div className="flex flex-col gap-12">
-          {dataResult.value.attributes.content?.map((item, index) => (
-            item.__typename === "ComponentCustomRichText"
-              ? (
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                <RichText key={index} title={item.title} text={item.text} />
-              )
-            : item.__typename === "ComponentCustomSlider"
-              ? (
-                <SliderComponent key={index} title={item.title} images={item.images} classNameSlider='lg:w-4/5 mx-auto' />
-              )
-            : item.__typename === "ComponentCustomVideoEmbed"
-              ? (
-                <EmbededHTML key={index} title={item.title} elem={item.embed} classNameEmbeded="lg:w-4/5 mx-auto" />
-              )
-            : item.__typename === "ComponentCustomVideo"
-              ? (
-                <VideoComponent key={index} title={item.title} video={item.video} classNameVideo="lg:w-4/5 mx-auto" />
-              )
-            : null
-          ))}
-        </div>
+        {dataResult.value.attributes.content?.map((item, index) => (
+          <DynamicZone key={index} item={item} />
+        ))}
+      </div>
     </>
   )
 }

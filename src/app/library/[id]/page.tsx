@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowUpRightFromSquare } from 'lucide-react';
 import GoBackButton from '@/components/GoBackButton';
 import ImageComponent from '@/components/thumbnails/ImageComponent';
+import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
 
 export default async function BookSingle({
   params: { id },
@@ -33,7 +34,7 @@ export default async function BookSingle({
     <>
       <div className="w-full flex flex-col justify-between gap-4 mt-3 relative md:flex-row border-b-2 border-foreground">
         <GoBackButton className="absolute -top-10 left-0 sm:-left-8 sm:top-0 lg:-left-12" />
-        <h1 className="text-foreground lg:text-3xl text-2xl font-NotoSerif font-bold pb-4 sm:mt-0 mt-3">
+        <h1 className="text-foreground lg:text-3xl sm:text-2xl text-xl font-NotoSerif font-bold pb-4 sm:mt-0 mt-3">
           {dataResult.value.attributes.title}
         </h1>
       </div>
@@ -88,6 +89,12 @@ export default async function BookSingle({
             <BlocksRendererStrapi content={dataResult.value.attributes.text} />
           </div>
         )}
+      </div>
+
+      <div className="flex flex-col gap-12">
+        {dataResult.value.attributes.content?.map((item, index) => (
+          <DynamicZone key={index} item={item} />
+        ))}
       </div>
     </>
   )

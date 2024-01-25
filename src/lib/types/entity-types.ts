@@ -55,6 +55,28 @@ export const VideoComp = z.object({
 })
 export type VideoComp = z.infer<typeof VideoComp>;
 
+export const FileListItem = z.object({
+  name: z.string(),
+  file: z.object({
+    data: z.object({
+      attributes: z.object({
+        url: z.string()
+      })
+    })
+  }),
+})
+export type FileListItem = z.infer<typeof FileListItem>;
+
+export const FileListComp = z.object({
+  __typename: z.literal("ComponentCustomFilesList"),
+  title: z.string().nullable(),
+  list: FileListItem.array()
+})
+export type FileListComp = z.infer<typeof FileListComp>;
+
+export const DynamicZoneT = z.union([RichTextComp, SliderComp, VideoEmbedComp, VideoComp, FileListComp])
+export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
+
 //.........................MAIN PAGE.........................//
 export const MainPage = z.object({
     name: z.string(),
@@ -135,11 +157,12 @@ export const Event = z.object({
     }),
     description: z.string(),
     image: Image,
-    additionalImages: ImagesArray.optional(),
+    additionalImages: ImagesArray,
     category: z.object({
       data: EventsCategory.nullable()
     }),
     text: z.any(),
+    content: DynamicZoneT.array()
   }),
 });
 export type Event = z.infer<typeof Event>;
@@ -150,7 +173,22 @@ export const Events = z.object({
       total: z.number(),
     }),
   }),
-  data: Event.array(),
+  data: z.object({
+    id: z.string(),
+    attributes: z.object({
+      title: z.string(),
+      date: z.object({
+        day: z.number(),
+        month: z.number(),
+        year: z.number()
+      }),
+      description: z.string(),
+      image: Image,
+      category: z.object({
+        data: EventsCategory.nullable()
+      }),
+    })
+  }).array(),
 });
 export type Events = z.infer<typeof Events>;
 
@@ -170,6 +208,7 @@ export const Book = z.object({
     image: Image,
     text: z.any().nullable(),
     file: Image,
+    content: DynamicZoneT.array()
   }),
 });
 export type Book = z.infer<typeof Book>;
@@ -197,6 +236,7 @@ export const Methodological = z.object({
     title: z.string(),
     image: Image,
     description: z.string().nullable(),
+    content: DynamicZoneT.array()
   }),
 });
 export type Methodological = z.infer<typeof Methodological>;
@@ -226,7 +266,7 @@ export const NewsSingle = z.object({
     image: Image,
     date: z.string(),
     text: z.any(),
-    content: z.union([RichTextComp, SliderComp, VideoEmbedComp, VideoComp]).array()
+    content: DynamicZoneT.array()
   }),
 });
 export type NewsSingle = z.infer<typeof NewsSingle>;

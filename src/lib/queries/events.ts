@@ -50,6 +50,50 @@ export const getEventByID = async ({
                 }
               }
             }
+            content {
+              __typename
+              ...on ComponentCustomRichText {
+                title
+                text
+              }
+              ...on ComponentCustomSlider {
+                title
+                images {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
+              }
+              ...on ComponentCustomVideo {
+                title
+                video {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
+              }
+              ...on ComponentCustomVideoEmbed {
+                title
+                embed
+              }
+              ...on ComponentCustomFilesList {
+                title
+                list {
+                  name
+                  file {
+                    data {
+                      attributes {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
