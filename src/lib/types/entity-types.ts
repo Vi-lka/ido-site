@@ -90,6 +90,7 @@ export const PageDescriptions = z.object({
   library: z.any(),
   events: z.any(),
   news: z.any(),
+  methodological: z.any(),
 });
 export type PageDescriptions = z.infer<typeof PageDescriptions>;
 
@@ -236,6 +237,8 @@ export const Methodological = z.object({
     title: z.string(),
     image: Image,
     description: z.string().nullable(),
+    additionalImages: ImagesArray,
+    files: FileListComp.nullable(),
     content: DynamicZoneT.array()
   }),
 });

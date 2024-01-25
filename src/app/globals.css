@@ -143,11 +143,6 @@ html.dark .logo-svg path {
  }
 }
 
-.li-elem:hover .li-svg,
-.li-elem:focus .li-svg {
-  scale: 1.15
-}
-
 .li-elem:hover .li-title,
 .li-elem:focus .li-title {
   color: hsl(var(--ring))

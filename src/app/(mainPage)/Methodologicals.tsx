@@ -2,7 +2,7 @@ import ErrorHandler from '@/components/errors/ErrorHandler';
 import IconBooksSvg from '@/components/svg/IconBooksSvg';
 import ImageComponent from '@/components/thumbnails/ImageComponent';
 import { Button } from '@/components/ui/button';
-import { getMethodologicals } from '@/lib/queries/methodological';
+import { getMethodological } from '@/lib/queries/methodological';
 import { getShortDescription } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react'
@@ -10,7 +10,7 @@ import React from 'react'
 export default async function Methodologicals() {
 
     const [ dataResult ] = await Promise.allSettled([
-        getMethodologicals({ page: 1, per: 4 }) 
+        getMethodological({ page: 1, per: 4 }) 
     ]);
     if (dataResult.status === "rejected")
     return (

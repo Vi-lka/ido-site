@@ -16,7 +16,7 @@ export default function BooksLayout({
   const ref = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    if (!!ref.current && (ref.current.clientHeight > 3000)) setShowSvg(true)
+    if (!!ref.current && (ref.current.clientHeight > 2000)) setShowSvg(true)
     else setShowSvg(false)
   }, [ref])
 
