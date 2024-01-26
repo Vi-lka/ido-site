@@ -5,8 +5,8 @@ import { getBookByID } from '@/lib/queries/books';
 import Link from 'next/link';
 import { ArrowUpRightFromSquare } from 'lucide-react';
 import GoBackButton from '@/components/GoBackButton';
-import ImageComponent from '@/components/thumbnails/ImageComponent';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
+import PhotoZoom from '@/components/content/PhotoZoom';
 
 export default async function BookSingle({
   params: { id },
@@ -72,15 +72,20 @@ export default async function BookSingle({
 
       <div className="">
         {dataResult.value.attributes.image.data && (
-          <ImageComponent
+          <PhotoZoom
             src={dataResult.value.attributes.image.data.attributes.url}
-            fill={false}
-            width={650}
-            height={650}
-            priority
-            className="lg:float-right lg:m-6 mx-auto my-6 lg:w-1/2 w-auto max-h-[70vh] overflow-hidden rounded-md object-contain"
             alt={dataResult.value.attributes.title}
+            className="lg:float-right lg:m-6 mx-auto my-6 lg:w-1/2 w-full"
           />
+          // <ImageComponent
+          //   src={dataResult.value.attributes.image.data.attributes.url}
+          //   fill={false}
+          //   width={650}
+          //   height={650}
+          //   priority
+          //   className="lg:float-right lg:m-6 mx-auto my-6 lg:w-1/2 w-auto max-h-[70vh] overflow-hidden rounded-md object-contain"
+          //   alt={dataResult.value.attributes.title}
+          // />
         )}
 
         {dataResult.value.attributes.text && (

@@ -44,7 +44,7 @@ export default async function Methodologicals() {
                   : <IconBooksSvg className='li-svg lg:w-[60px] w-[50px] transition-all' />
                 }
                 <div className='flex-1'>
-                  <p className='li-title text-sm font-semibold'>{item.attributes.title}</p>
+                  <p className='li-title text-sm font-semibold transition-all'>{item.attributes.title}</p>
                   {item.attributes.description && <p className='text-xs'>{getShortDescription(item.attributes.description, 20)}</p>}
                 </div>
               </li>

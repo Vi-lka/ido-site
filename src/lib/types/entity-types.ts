@@ -85,12 +85,19 @@ export const MainPage = z.object({
 });
 export type MainPage = z.infer<typeof MainPage>;
 
+//.........................ABOUT PAGE.........................//
+export const AboutPage = z.object({
+  content: DynamicZoneT.array()
+});
+export type AboutPage = z.infer<typeof AboutPage>;
+
 //.........................PAGE DESCRIPTION.........................//
 export const PageDescriptions = z.object({
   library: z.any(),
   events: z.any(),
   news: z.any(),
   methodological: z.any(),
+  projects: z.any(),
 });
 export type PageDescriptions = z.infer<typeof PageDescriptions>;
 
@@ -290,3 +297,34 @@ export const News = z.object({
   }).array(),
 });
 export type News = z.infer<typeof News>;
+
+//.........................PROJECTS.........................//
+export const ProjectSingle = z.object({
+  id: z.string(),
+  attributes: z.object({
+    title: z.string(),
+    description: z.string(),
+    image: Image,
+    additionalImages: ImagesArray,
+    text: z.any(),
+    content: DynamicZoneT.array()
+  }),
+});
+export type ProjectSingle = z.infer<typeof ProjectSingle>;
+
+export const Projects = z.object({
+  meta: z.object({
+    pagination: z.object({
+      total: z.number(),
+    }),
+  }),
+  data: z.object({
+    id: z.string(),
+    attributes: z.object({
+      title: z.string(),
+      description: z.string(),
+      image: Image,
+    })
+  }).array(),
+});
+export type Projects = z.infer<typeof Projects>;

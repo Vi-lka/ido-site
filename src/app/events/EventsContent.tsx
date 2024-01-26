@@ -77,13 +77,15 @@ export default async function EventsContent({
                   href={`/events/${event.id}`}
                   src={event.attributes.image.data?.attributes.url}
                   title={null}
-                  className="w-4/5 max-w-lg"
+                  className="w-4/6 max-w-lg"
                 />
               </div>
 
-              <div className="font-Raleway flex flex-col justify-between gap-6 lg:w-3/5 w-full h-full">
+              <div className="font-Raleway flex flex-col justify-between gap-6 lg:w-4/5 w-full h-full">
                 <div className="font-Raleway flex flex-col gap-1 w-full">
-                  <h1 className="font-bold text-lg">{event.attributes.title}</h1>
+                  <Link href={`/events/${event.id}`} className="hover:text-primary transition-all">
+                    <h1 className="font-bold text-lg">{event.attributes.title}</h1>
+                  </Link>
                   <h2 className="text-primary mb-3">{event.attributes.category?.data?.attributes.title}</h2>
                   {/* Desktop */}
                   <p className="whitespace-pre-line sm:block hidden">{event.attributes.description}</p>

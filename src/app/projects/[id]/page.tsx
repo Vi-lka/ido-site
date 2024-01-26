@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import { getMethodologicalByID } from '@/lib/queries/methodological';
+import { getProjectByID } from '@/lib/queries/projects';
 import React from 'react'
 import GoBackButton from '@/components/GoBackButton';
 import PhotoZoom from '@/components/content/PhotoZoom';
 import PhotoSlider from '@/components/content/PhotoSlider';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
-import FilesList from '@/components/content/DynamicZone/FilesList';
+import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 
 export default async function MethodologicalSingle({
   params: { id },
@@ -15,13 +15,13 @@ export default async function MethodologicalSingle({
 }) {
 
   const [ dataResult ] = await Promise.allSettled([
-    getMethodologicalByID({ id }),
+    getProjectByID({ id }),
   ]);
   if (dataResult.status === "rejected")
     return (
       <ErrorHandler
         error={dataResult.reason as unknown}
-        place={`Methodological id: ${id}`}
+        place={`Project id: ${id}`}
         notFound
         goBack
       />
@@ -66,16 +66,11 @@ export default async function MethodologicalSingle({
           />
         )}
 
-        {dataResult.value.attributes.description && (
+        {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
-            <article className="prose lg:prose-xl text-foreground">
-                <p className="whitespace-pre-line text-base">{dataResult.value.attributes.description}</p>
-            </article>
+            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+            <BlocksRendererStrapi content={dataResult.value.attributes.text} />
           </div>
-        )}
-
-        {dataResult.value.attributes.files && (
-            <FilesList title={dataResult.value.attributes.files.title} list={dataResult.value.attributes.files.list} />
         )}
       </div>
 

@@ -5,6 +5,8 @@ import Books from "./(mainPage)/Books";
 import Methodologicals from "./(mainPage)/Methodologicals";
 import WaveRedSvg from "@/components/svg/WaveRedSvg";
 import BooksSvg from "@/components/svg/BooksSvg";
+import Projects from "./(mainPage)/Projects";
+import News from "./(mainPage)/News";
 
 export default async function Home() {
 
@@ -31,11 +33,15 @@ export default async function Home() {
 
       <Books />
 
+      <Projects />
+
       <div className="relative w-full">
-        <WaveRedSvg className="w-full absolute lg:-bottom-52 sm:-bottom-36 min-[2000px]:hidden sm:block hidden left-1/2 -translate-x-1/2 opacity-70 dark:opacity-[0.02] -z-10" />
+        <WaveRedSvg className="w-full absolute lg:bottom-80 sm:bottom-96 min-[2000px]:hidden sm:block hidden left-1/2 -translate-x-1/2 opacity-70 dark:opacity-[0.02] -z-10" />
       </div>
 
       <Methodologicals />
+
+      <News />
     </main>
   )
 }

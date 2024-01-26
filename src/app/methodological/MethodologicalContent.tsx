@@ -55,9 +55,9 @@ export default async function MethodologicalContent({
       >
         {dataResult.value.data.map(method => (
             <div key={method.id} className="flex lg:flex-row flex-col items-center justify-between gap-6">
-              <div className="flex items-center lg:w-1/5 w-full lg:justify-normal justify-center">
+              <div className="flex items-center lg:w-1/6 w-full lg:justify-normal justify-center">
                 {method.attributes.image.data ?
-                    <Link href={`/methodological/${method.id}`} className="aspect-square w-full lg:max-w-[250px] max-w-[150px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent hover:scale-105">
+                    <Link href={`/methodological/${method.id}`} className="aspect-square w-full lg:max-w-[250px] max-w-[200px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent hover:scale-105">
                         <ImageComponent
                           src={method.attributes.image.data?.attributes.url}
                           alt={method.attributes.title}
@@ -69,7 +69,7 @@ export default async function MethodologicalContent({
                         />
                     </Link>
                   : (
-                  <Link href={`/methodological/${method.id}`} className="aspect-square w-full lg:max-w-[200px] max-w-[100px] hover:scale-105 transition-all duration-200">
+                  <Link href={`/methodological/${method.id}`} className="aspect-square w-full lg:max-w-[200px] max-w-[150px] hover:scale-105 transition-all duration-200">
                     <IconBooksSvg className='w-full h-full' />
                   </Link>
                 )}
