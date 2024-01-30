@@ -9,8 +9,10 @@ import Link from "next/link";
 import React from "react";
 
 export default async function MethodologicalContent({
+  section,
   searchParams,
 }: {
+  section: string,
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
@@ -27,6 +29,7 @@ export default async function MethodologicalContent({
       per: Number(per),
       sort,
       search,
+      section
     }),
   ]);
   if (dataResult.status === "rejected")
@@ -57,7 +60,7 @@ export default async function MethodologicalContent({
             <div key={method.id} className="flex lg:flex-row flex-col items-center justify-between gap-6">
               <div className="flex items-center lg:w-1/6 w-full lg:justify-normal justify-center">
                 {method.attributes.image.data ?
-                    <Link href={`/methodological/${method.id}`} className="aspect-square w-full lg:max-w-[250px] max-w-[200px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent hover:scale-105">
+                    <Link href={`/methodological/${section}/${method.id}`} className="aspect-square w-full lg:max-w-[250px] max-w-[200px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent hover:scale-105">
                         <ImageComponent
                           src={method.attributes.image.data?.attributes.url}
                           alt={method.attributes.title}
@@ -69,7 +72,7 @@ export default async function MethodologicalContent({
                         />
                     </Link>
                   : (
-                  <Link href={`/methodological/${method.id}`} className="aspect-square w-full lg:max-w-[200px] max-w-[150px] hover:scale-105 transition-all duration-200">
+                  <Link href={`/methodological/${section}/${method.id}`} className="aspect-square w-full lg:max-w-[200px] max-w-[150px] hover:scale-105 transition-all duration-200">
                     <IconBooksSvg className='w-full h-full' />
                   </Link>
                 )}
@@ -77,7 +80,7 @@ export default async function MethodologicalContent({
 
               <div className="font-Raleway flex flex-col justify-between gap-6 w-full h-full">
                 <div className="font-Raleway flex flex-col gap-1 w-full">
-                  <Link href={`/methodological/${method.id}`} className="hover:text-primary transition-all">
+                  <Link href={`/methodological/${section}/${method.id}`} className="hover:text-primary transition-all">
                     <h1 className="font-bold text-lg">{method.attributes.title}</h1>
                   </Link>
                   {method.attributes.description && (<>
@@ -87,7 +90,7 @@ export default async function MethodologicalContent({
                     <p className="whitespace-pre-line sm:hidden block">{getShortDescription(method.attributes.description)}</p>
                   </>)}
                 </div>
-                <Link href={`/methodological/${method.id}`} passHref className='w-fit h-fit mb-2 lg:self-auto self-end'>
+                <Link href={`/methodological/${section}/${method.id}`} passHref className='w-fit h-fit mb-2 lg:self-auto self-end'>
                   <Button className='font-Raleway font-semibold lg:px-14 px-12 py-6 hover:bg-primary/90'>
                     Открыть
                   </Button>

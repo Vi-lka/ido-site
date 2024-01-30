@@ -17,11 +17,16 @@ export default async function ProjectsPage({
   return (
     <>
       <div className="w-full mb-4 mt-10 gap-4 flex justify-between items-center pb-4 border-b-2 border-foreground">
-        <h1 className="text-foreground lg:text-4xl text-3xl font-NotoSerif font-bold">
-          Проекты
-        </h1>
+        <div className='flex flex-col gap-3'>
+          <h1 className="text-foreground lg:text-4xl sm:text-3xl text-2xl font-NotoSerif font-bold">
+            Проекты
+          </h1>
+          {(pageDescriptions.status !== "rejected" && pageDescriptions.value.projects) && (
+            <p className='font-Raleway sm:text-sm text-xs sm:text-left text-justify'>{pageDescriptions.value.projects.short}</p>
+          )}
+        </div>
         {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-        {(pageDescriptions.status !== "rejected" && pageDescriptions.value.projects) && <PageDescriptions data={pageDescriptions.value.projects} />}
+        {(pageDescriptions.status !== "rejected" && pageDescriptions.value.projects?.full) && <PageDescriptions data={pageDescriptions.value.projects.full} />}
       </div>
 
       <Suspense fallback={

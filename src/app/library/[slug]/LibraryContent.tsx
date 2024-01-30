@@ -5,8 +5,10 @@ import { getBooks } from "@/lib/queries/books";
 import React from "react";
 
 export default async function LibraryContent({
+  section,
   searchParams,
 }: {
+  section: string,
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
 
@@ -16,7 +18,6 @@ export default async function LibraryContent({
   const per = searchParams["per"] ?? defaultPageSize;
   const sort = searchParams["sort"] as string | undefined;
   const search = searchParams["search"] as string | undefined;
-  const category = searchParams["category"] as string | undefined;
 
   const [dataResult] = await Promise.allSettled([
     getBooks({
@@ -24,7 +25,7 @@ export default async function LibraryContent({
       per: Number(per),
       sort,
       search,
-      category
+      section
     }),
   ]);
   if (dataResult.status === "rejected")
@@ -54,7 +55,7 @@ export default async function LibraryContent({
         {dataResult.value.data.map(book => (
           <ImgItem
             key={book.id}
-            href={`/library/${book.id}`}
+            href={`/library/${section}/${book.id}`}
             src={book.attributes.image.data?.attributes.url}
             title={book.attributes.title}
           />

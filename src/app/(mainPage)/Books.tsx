@@ -29,8 +29,10 @@ export default async function Books() {
         <div className='lg:w-1/2 w-full lg:mt-4 mt-2'>
           <ul className="font-Raleway flex flex-col gap-6 lg:mb-12 mb-6">
             {dataResult.value.data.map(item => {
+              const section = item.attributes.section.data?.attributes.slug
+
               return (
-                <Link key={item.id} href={`/library/${item.id}`} passHref>
+                <Link key={item.id} href={`/library/${section}/${item.id}`} passHref>
                   <li className='li-elem font-medium hover:text-ring'>
                     <BookOpenText className='li-svg inline-block transition-all' /> {item.attributes.title}
                   </li>

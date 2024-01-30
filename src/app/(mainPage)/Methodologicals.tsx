@@ -10,7 +10,7 @@ import React from 'react'
 export default async function Methodologicals() {
 
     const [ dataResult ] = await Promise.allSettled([
-        getMethodological({ page: 1, per: 4 }) 
+      getMethodological({ page: 1, per: 4 }) 
     ]);
     if (dataResult.status === "rejected")
     return (
@@ -28,8 +28,10 @@ export default async function Methodologicals() {
       </h3>
       <ul className="grid items-start gap-6 w-full lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 font-Raleway">
         {dataResult.value.data.map(item => {
+          const section = item.attributes.section.data?.attributes.slug
+
           return (
-            <Link key={item.id} href={`/methodological/${item.id}`} passHref>
+            <Link key={item.id} href={`/methodological/${section}/${item.id}`} passHref>
               <li className='li-elem flex gap-3 items-start'>
                 {item.attributes.image.data ?
                   <ImageComponent

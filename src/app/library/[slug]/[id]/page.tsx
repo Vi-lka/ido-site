@@ -15,9 +15,7 @@ export default async function BookSingle({
 }) {
 
   const [dataResult] = await Promise.allSettled([
-    getBookByID({
-      id
-    }),
+    getBookByID({ id }),
   ]);
   if (dataResult.status === "rejected") return (
     <ErrorHandler
@@ -28,7 +26,7 @@ export default async function BookSingle({
     />
   );
 
-  const category = dataResult.value.attributes.category.data
+  const section = dataResult.value.attributes.section.data
 
   return (
     <>
@@ -40,16 +38,16 @@ export default async function BookSingle({
       </div>
 
       <div className='flex items-center justify-between gap-3 w-full'>
-        {category && (
+        {section && (
           <div className="flex gap-1 items-center flex-wrap lg:text-xl text-lg font-Raleway mt-3">
             <h2 className="text-sm">
               Раздел:
             </h2>
             <Link 
-              href={"/library?category=" + category.attributes.slug}
+              href={"/library/" + section.attributes.slug}
               className='text-base font-medium underline underline-offset-4 hover:text-primary transition-all'
             >
-              {category.attributes.title}
+              {section.attributes.title}
             </Link>
           </div>
         )}

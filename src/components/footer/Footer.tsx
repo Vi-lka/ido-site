@@ -5,7 +5,7 @@ import { Skeleton } from "../ui/skeleton";
 import { ClientHydration } from "../providers/ClientHydration";
 import NavMenuF from "./NavMenuF";
 import { getMainPage } from "@/lib/queries/main";
-import { getContacts } from "@/lib/queries/contacts";
+import { getContacts } from "@/lib/queries/main";
 import ErrorHandler from "../errors/ErrorHandler";
 
 export default async function Footer() {

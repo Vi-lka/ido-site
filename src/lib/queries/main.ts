@@ -1,4 +1,6 @@
-import { AboutPage, MainPage, PageDescriptions } from "../types/entity-types";
+import { notFound } from "next/navigation";
+import type { Section} from "../types/entity-types";
+import { AboutPage, Contacts, MainPage, PageDescriptions, SearchAll, Sections } from "../types/entity-types";
 
 export const getMainPage = async (): Promise<MainPage> => {
   const headers = { "Content-Type": "application/json" };
@@ -58,11 +60,31 @@ export const getPageDescriptions = async (): Promise<PageDescriptions> => {
       pageDescription {
         data {
           attributes {
-            library
-            events
-            news
-            methodological
-            projects
+            library {
+              __typename
+              short
+              full
+            }
+            events {
+              __typename
+              short
+              full
+            }
+            news {
+              __typename
+              short
+              full
+            }
+            methodological {
+              __typename
+              short
+              full
+            }
+            projects {
+              __typename
+              short
+              full
+            }
           }
         }
       }
@@ -193,5 +215,399 @@ export const getAboutPage = async (): Promise<AboutPage> => {
   
   const data = AboutPage.parse(json.data.about.data.attributes);
   
+  return data;
+};
+
+export const getContacts = async (): Promise<Contacts> => {
+  const headers = { "Content-Type": "application/json" };
+  const query = /* GraphGL */ `
+    query Contacts {
+      contact {
+        data {
+          attributes {
+            tel
+            email
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    next: {
+      tags: ["strapi"],
+      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      revalidate: 60,
+    },
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Contacts'");
+  }
+
+  const json = (await res.json()) as {
+    data: {
+      contact: {
+        data: {
+          attributes: Contacts
+        };
+      };
+    };
+  };
+
+  const data = Contacts.parse(json.data.contact.data.attributes);
+
+  return data;
+};
+
+export const getSections = async ({
+  page,
+  per,
+  sort = "order:asc",
+  search = "",
+  type,
+}: {
+  page: number;
+  per: number;
+  sort?: string;
+  search?: string;
+  type?: "books" | "methodological"
+}): Promise<Sections> => {
+  const headers = { "Content-Type": "application/json" };
+  const query = /* GraphGL */ `
+    query Sections {
+      sections(
+        sort: "${sort}", 
+        pagination: {
+          page: ${page},
+          pageSize: ${per}
+        },
+        filters: {
+          title: {
+            containsi: "${search}"
+          },
+          ${type === "books"
+            ? `
+              books: {
+                title: {
+                  containsi: ""
+                },
+              }
+            `
+            : type === "methodological"
+              ? `
+                method_resources: {
+                  title: {
+                    containsi: ""
+                  },
+                }
+              `
+              : ""
+          }
+        }
+      ) {
+        meta {
+          pagination {
+            total
+          }
+        }
+        data {
+          id
+          attributes {
+            slug
+            title
+            description
+            text
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    next: {
+      tags: ["strapi"],
+      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      revalidate: 60,
+    },
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Sections'");
+  }
+
+  const json = (await res.json()) as { data: { sections: Sections }; };
+
+  if (
+    json.data.sections.meta.pagination.total === 0 ||
+    json.data.sections.data.length === 0
+  ) {
+    notFound();
+  }
+  
+  const sections = Sections.parse(json.data.sections);
+  
+  return sections;
+};
+
+export const getSectionBySlug = async (slug: string): Promise<Section> => {
+  const headers = { "Content-Type": "application/json" };
+  const query = /* GraphGL */ `
+    query SectionBySlug {
+      sections(filters: {
+        slug: {eq: "${slug}"}
+      }) {
+        meta {
+          pagination {
+            total
+          }
+        }
+        data {
+          id
+          attributes {
+            slug
+            title
+            description
+            text
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    next: {
+      tags: ["strapi"],
+      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      revalidate: 60,
+    },
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Section By Slug'");
+  }
+
+  const json = (await res.json()) as { data: { sections: Sections }; };
+
+  if (
+    json.data.sections.meta.pagination.total === 0 ||
+    json.data.sections.data.length === 0
+  ) {
+    notFound();
+  }
+  
+  const sections = Sections.parse(json.data.sections);
+  
+  return sections.data[0];
+};
+
+export const getSearchAll = async ({
+  search = "",
+}: {
+  search?: string;
+}): Promise<SearchAll> => {
+  const headers = { "Content-Type": "application/json" };
+  const query = /* GraphGL */ `
+    query SearchAll {
+      events(filters: {
+        or: [
+          {title: { containsi: "${search}" }},
+          {description: { containsi: "${search}" }},
+          {text: { containsi: "${search}" }},
+          {category: {
+            title: { containsi: "${search}" }
+          }},
+          {category: {
+            description: { containsi: "${search}" }
+          }}
+        ]
+      }) {
+        data {
+          id
+          attributes {
+            title
+            description
+            date {
+              day month year
+            }
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            category {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
+          }
+        }
+      }
+
+      methodResources(filters: {
+        or: [
+          {title: { containsi: "${search}" }},
+          {description: { containsi: "${search}" }},
+          {files: {
+            title: { containsi: "${search}" }
+          }},
+        ]
+      }) {
+        data {
+          id
+          attributes {
+            title
+            description
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      projects(filters: {
+        or: [
+          {title: { containsi: "${search}" }},
+          {description: { containsi: "${search}" }},
+          {text: { containsi: "${search}" }},
+        ]
+      }) {
+        data {
+          id
+          attributes {
+            title
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      books(filters: {
+        or: [
+          {title: { containsi: "${search}" }},
+          {text: { containsi: "${search}" }},
+          {category: {
+            title: { containsi: "${search}" }
+          }},
+          {category: {
+            description: { containsi: "${search}" }
+          }}
+        ]
+      }) {
+        data {
+          id
+          attributes {
+            title
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      news(filters: {
+        or: [
+          {title: { containsi: "${search}" }},
+          {text: { containsi: "${search}" }},
+        ]
+      }) {
+        data {
+          id
+          attributes {
+            title
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            date
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    next: {
+      tags: ["strapi"],
+      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      revalidate: 60,
+    },
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Search'");
+  }
+
+  const json = (await res.json()) as { data: SearchAll };
+
+  const data = SearchAll.parse(json.data);
+
   return data;
 };

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Book, Books, BooksCategories } from "../types/entity-types";
+import { Book, Books } from "../types/entity-types";
 
 export const getBookByID = async ({
   id,
@@ -14,7 +14,7 @@ export const getBookByID = async ({
           id
           attributes {
             title
-            category {
+            section {
               data {
                 attributes {
                   slug
@@ -127,13 +127,13 @@ export const getBooks = async ({
   per,
   sort = "order:asc",
   search = "",
-  category = ""
+  section
 }: {
   page: number;
   per: number;
   sort?: string;
   search?: string;
-  category?: string;
+  section?: string;
 }): Promise<Books> => {
   const headers = { "Content-Type": "application/json" };
   const query = /* GraphGL */ `
@@ -148,13 +148,13 @@ export const getBooks = async ({
             title: {
               containsi: "${search}"
             },
-            ${category && `
-              category: {
+            ${section ? `
+              section: {
                 slug: {
-                  containsi: "${category}"
+                  containsi: "${section}"
                 }
               }
-            `}
+            ` : ""}
           }
       ) {
         meta {
@@ -166,6 +166,14 @@ export const getBooks = async ({
           id
           attributes {
             title
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
             image {
               data {
                 attributes {
@@ -213,77 +221,4 @@ export const getBooks = async ({
   const books = Books.parse(json.data.books);
   
   return books;
-};
-
-export const getBooksCategories = async ({
-  search = "",
-}: {
-  search?: string;
-}): Promise<BooksCategories> => {
-  const headers = { "Content-Type": "application/json" };
-  const query = /* GraphGL */ `
-    query BooksCategories {
-      booksCategories(
-          filters: {
-            title: {
-              containsi: "${search}"
-            },
-          }
-      ) {
-        meta {
-          pagination {
-            total
-          }
-        }
-        data {
-          id
-          attributes {
-            slug
-            title
-            description
-            image {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
-    headers,
-    method: "POST",
-    body: JSON.stringify({
-      query,
-    }),
-    next: {
-      tags: ["strapi"],
-      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
-      revalidate: 60,
-    },
-  });
-
-  if (!res.ok) {
-    // Log the error to an error reporting service
-    const err = await res.text();
-    console.log(err);
-    // Throw an error
-    throw new Error("Failed to fetch data 'Books Categories'");
-  }
-
-  const json = (await res.json()) as { data: { booksCategories: BooksCategories }; };
-
-  if (
-    json.data.booksCategories.meta.pagination.total === 0 ||
-    json.data.booksCategories.data.length === 0
-  ) {
-    notFound();
-  }
-  
-  const booksCategories = BooksCategories.parse(json.data.booksCategories);
-  
-  return booksCategories;
 };

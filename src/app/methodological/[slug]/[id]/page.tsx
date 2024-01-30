@@ -7,6 +7,7 @@ import PhotoZoom from '@/components/content/PhotoZoom';
 import PhotoSlider from '@/components/content/PhotoSlider';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
 import FilesList from '@/components/content/DynamicZone/FilesList';
+import Link from 'next/link';
 
 export default async function MethodologicalSingle({
   params: { id },
@@ -27,6 +28,8 @@ export default async function MethodologicalSingle({
       />
     );
 
+  const section = dataResult.value.attributes.section.data
+
   const firstImage = {
     src: dataResult.value.attributes.image.data ? dataResult.value.attributes.image.data.attributes.url : "/images/image-placeholder.png",
     alt: dataResult.value.attributes.title,
@@ -46,6 +49,22 @@ export default async function MethodologicalSingle({
         <h1 className="text-foreground lg:text-3xl sm:text-2xl text-xl font-NotoSerif font-bold pb-4 sm:mt-0 mt-3">
           {dataResult.value.attributes.title}
         </h1>
+      </div>
+
+      <div className='flex items-center justify-between gap-3 w-full'>
+        {section && (
+          <div className="flex gap-1 items-center flex-wrap lg:text-xl text-lg font-Raleway mt-3">
+            <h2 className="text-sm">
+              Раздел:
+            </h2>
+            <Link 
+              href={"/methodological/" + section.attributes.slug}
+              className='text-base font-medium underline underline-offset-4 hover:text-primary transition-all'
+            >
+              {section.attributes.title}
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="">

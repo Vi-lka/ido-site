@@ -14,6 +14,14 @@ export const getMethodologicalByID = async ({
           id
           attributes {
             title
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
             description
             image {
               data {
@@ -133,11 +141,13 @@ export const getMethodological = async ({
   per,
   sort = "order:asc",
   search = "",
+  section
 }: {
   page: number;
   per: number;
   sort?: string;
   search?: string;
+  section?: string;
 }): Promise<Methodologicals> => {
   const headers = { "Content-Type": "application/json" };
   const query = /* GraphGL */ `
@@ -152,6 +162,13 @@ export const getMethodological = async ({
             title: {
               containsi: "${search}"
             },
+            ${section ? `
+            section: {
+              slug: {
+                containsi: "${section}"
+              }
+            }
+          ` : ""}
           }
       ) {
         meta {
@@ -164,6 +181,14 @@ export const getMethodological = async ({
           attributes {
             title
             description
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
             image {
               data {
                 attributes {

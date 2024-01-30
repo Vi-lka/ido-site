@@ -77,6 +77,14 @@ export type FileListComp = z.infer<typeof FileListComp>;
 export const DynamicZoneT = z.union([RichTextComp, SliderComp, VideoEmbedComp, VideoComp, FileListComp])
 export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 
+export const DescriptionComp = z.object({
+  __typename: z.literal("ComponentCustomDescription"),
+  short: z.string().nullable(),
+  full: z.any(),
+})
+export type DescriptionComp = z.infer<typeof DescriptionComp>;
+
+
 //.........................MAIN PAGE.........................//
 export const MainPage = z.object({
     name: z.string(),
@@ -93,11 +101,11 @@ export type AboutPage = z.infer<typeof AboutPage>;
 
 //.........................PAGE DESCRIPTION.........................//
 export const PageDescriptions = z.object({
-  library: z.any(),
-  events: z.any(),
-  news: z.any(),
-  methodological: z.any(),
-  projects: z.any(),
+  library: DescriptionComp.nullable(),
+  events: DescriptionComp.nullable(),
+  news: DescriptionComp.nullable(),
+  methodological: DescriptionComp.nullable(),
+  projects: DescriptionComp.nullable(),
 });
 export type PageDescriptions = z.infer<typeof PageDescriptions>;
 
@@ -109,27 +117,28 @@ export const Contacts = z.object({
 });
 export type Contacts = z.infer<typeof Contacts>;
 
-//.........................BOOKS CATEGORIES.........................//
-export const BooksCategory = z.object({
+//.........................Sections.........................//
+export const Section = z.object({
   id: z.string(),
   attributes: z.object({
     slug: z.string(),
     title: z.string(),
     image: Image,
     description: z.string().nullable(),
+    text: z.any()
   }),
 });
-export type BooksCategory = z.infer<typeof BooksCategory>;
+export type Section = z.infer<typeof Section>;
 
-export const BooksCategories = z.object({
+export const Sections = z.object({
   meta: z.object({
     pagination: z.object({
       total: z.number(),
     }),
   }),
-  data: BooksCategory.array(),
+  data: Section.array(),
 });
-export type BooksCategories = z.infer<typeof BooksCategories>;
+export type Sections = z.infer<typeof Sections>;
 
 //.........................EVENTS CATEGORIES.........................//
 export const EventsCategory = z.object({
@@ -205,7 +214,7 @@ export const Book = z.object({
   id: z.string(),
   attributes: z.object({
     title: z.string(),
-    category: z.object({
+    section: z.object({
       data: z.object({
         attributes: z.object({
           slug: z.string(),
@@ -231,6 +240,14 @@ export const Books = z.object({
     id: z.string(),
     attributes: z.object({
       title: z.string(),
+      section: z.object({
+        data: z.object({
+          attributes: z.object({
+            slug: z.string(),
+            title: z.string()
+          })
+        }).nullable()
+      }),
       image: Image,
     }),
   }).array(),
@@ -242,6 +259,14 @@ export const Methodological = z.object({
   id: z.string(),
   attributes: z.object({
     title: z.string(),
+    section: z.object({
+      data: z.object({
+        attributes: z.object({
+          slug: z.string(),
+          title: z.string()
+        })
+      }).nullable()
+    }),
     image: Image,
     description: z.string().nullable(),
     additionalImages: ImagesArray,
@@ -263,6 +288,14 @@ export const Methodologicals = z.object({
       title: z.string(),
       image: Image,
       description: z.string().nullable(),
+      section: z.object({
+        data: z.object({
+          attributes: z.object({
+            slug: z.string(),
+            title: z.string()
+          })
+        }).nullable()
+      }),
     }),
   }).array(),
 });
@@ -328,3 +361,35 @@ export const Projects = z.object({
   }).array(),
 });
 export type Projects = z.infer<typeof Projects>;
+
+export const SearchAll = z.object({
+  events: z.object({
+    data: z.object({
+      id: z.string(),
+      attributes: z.object({
+        title: z.string(),
+        description: z.string(),
+        image: Image,
+        date: z.object({
+          day: z.number(),
+          month: z.number(),
+          year: z.number()
+        }),
+        category: z.object({
+          data: EventsCategory.nullable()
+        }),
+      })
+    }).array()
+  }),
+  methodResources: z.object({
+    data: z.object({
+      id: z.string(),
+      attributes: z.object({
+        title: z.string(),
+        description: z.string(),
+        image: Image,
+      })
+    }).array()
+  }),
+});
+export type SearchAll = z.infer<typeof SearchAll>;

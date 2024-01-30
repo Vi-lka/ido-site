@@ -12,9 +12,9 @@ export default function NavMenu() {
             <NavMenuItem text={'Главная'} url={'/'} />
             <NavMenuItem text={'События'} url={'/events'} />
             <NavMenuItem text={'Методические ресурсы'} url={'/methodological'} />
-            <NavMenuItem text={'Проекты'} url={'/projects'} />
             <NavMenuItem text={'Библиотека'} url={'/library'} />
             <NavMenuItem text={'Новости'} url={'/news'} />
+            <NavMenuItem text={'Проекты'} url={'/projects'} />
             <NavMenuItem text={'О нас'} url={'/about'} />
         </NavigationMenuList>
     </NavigationMenu>
