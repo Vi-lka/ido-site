@@ -6,7 +6,10 @@ export const getProjectByID = async ({
 }: {
     id: string,
 }): Promise<ProjectSingle> => {
-    const headers = { "Content-Type": "application/json" };
+    const headers = { 
+      Authorization: `bearer ${process.env.API_TOKEN}`,
+      "Content-Type": "application/json"
+    };
     const query = /* GraphGL */ `
       query ProjectByID {
         project(id: "${id}") {
@@ -126,7 +129,10 @@ export const getProjects = async ({
     sort?: string;
     search?: string;
 }): Promise<Projects> => {
-    const headers = { "Content-Type": "application/json" };
+    const headers = { 
+      Authorization: `bearer ${process.env.API_TOKEN}`,
+      "Content-Type": "application/json"
+    };
     const query = /* GraphGL */ `
       query Projects {
         projects(

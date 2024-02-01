@@ -6,7 +6,10 @@ export const getBookByID = async ({
 }: {
   id: string,
 }): Promise<Book> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query BookByID {
       book(id: "${id}") {
@@ -135,7 +138,10 @@ export const getBooks = async ({
   search?: string;
   section?: string;
 }): Promise<Books> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query Books {
       books(

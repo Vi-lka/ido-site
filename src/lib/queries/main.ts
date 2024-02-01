@@ -3,7 +3,11 @@ import type { Section} from "../types/entity-types";
 import { AboutPage, Contacts, MainPage, PageDescriptions, SearchAll, Sections } from "../types/entity-types";
 
 export const getMainPage = async (): Promise<MainPage> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
+
   const query = /* GraphGL */ `
     query MainPage {
       mainPage {
@@ -54,7 +58,10 @@ export const getMainPage = async (): Promise<MainPage> => {
 };
 
 export const getPageDescriptions = async (): Promise<PageDescriptions> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query PageDescription {
       pageDescription {
@@ -127,7 +134,10 @@ export const getPageDescriptions = async (): Promise<PageDescriptions> => {
 };
 
 export const getAboutPage = async (): Promise<AboutPage> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query AboutPage {
       about {
@@ -219,7 +229,10 @@ export const getAboutPage = async (): Promise<AboutPage> => {
 };
 
 export const getContacts = async (): Promise<Contacts> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query Contacts {
       contact {
@@ -281,7 +294,10 @@ export const getSections = async ({
   search?: string;
   type?: "books" | "methodological"
 }): Promise<Sections> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query Sections {
       sections(
@@ -374,7 +390,10 @@ export const getSections = async ({
 };
 
 export const getSectionBySlug = async (slug: string): Promise<Section> => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query SectionBySlug {
       sections(filters: {
@@ -439,12 +458,11 @@ export const getSectionBySlug = async (slug: string): Promise<Section> => {
   return sections.data[0];
 };
 
-export const getSearchAll = async ({
-  search = "",
-}: {
-  search?: string;
-}): Promise<SearchAll> => {
-  const headers = { "Content-Type": "application/json" };
+export const getSearchAll = async (search = ""): Promise<SearchAll> => {
+  const headers = { 
+    Authorization: `bearer ${process.env.API_TOKEN}`,
+    "Content-Type": "application/json"
+  };
   const query = /* GraphGL */ `
     query SearchAll {
       events(filters: {
@@ -494,13 +512,70 @@ export const getSearchAll = async ({
           {files: {
             title: { containsi: "${search}" }
           }},
+          {files: {
+            list: {
+              name: { containsi: "${search}" }
+            }
+          }},
+          {section: {
+            description: { containsi: "${search}" }
+          }},
+          {section: {
+            text: { containsi: "${search}" }
+          }}
         ]
       }) {
         data {
           id
           attributes {
             title
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
             description
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      books(filters: {
+        or: [
+          {title: { containsi: "${search}" }},
+          {text: { containsi: "${search}" }},
+          {section: {
+            title: { containsi: "${search}" }
+          }},
+          {section: {
+            description: { containsi: "${search}" }
+          }},
+          {section: {
+            text: { containsi: "${search}" }
+          }}
+        ]
+      }) {
+        data {
+          id
+          attributes {
+            title
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
             image {
               data {
                 attributes {
@@ -523,33 +598,7 @@ export const getSearchAll = async ({
           id
           attributes {
             title
-            image {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-
-      books(filters: {
-        or: [
-          {title: { containsi: "${search}" }},
-          {text: { containsi: "${search}" }},
-          {category: {
-            title: { containsi: "${search}" }
-          }},
-          {category: {
-            description: { containsi: "${search}" }
-          }}
-        ]
-      }) {
-        data {
-          id
-          attributes {
-            title
+            description
             image {
               data {
                 attributes {
@@ -590,11 +639,12 @@ export const getSearchAll = async ({
     body: JSON.stringify({
       query,
     }),
-    next: {
-      tags: ["strapi"],
-      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
-      revalidate: 60,
-    },
+    cache: 'no-store',
+    // next: {
+      // tags: ["strapi"],
+      // // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      // revalidate: 60,
+    // },
   });
 
   if (!res.ok) {
@@ -602,7 +652,7 @@ export const getSearchAll = async ({
     const err = await res.text();
     console.log(err);
     // Throw an error
-    throw new Error("Failed to fetch data 'Search'");
+    throw new Error("Failed to fetch data 'Search All'");
   }
 
   const json = (await res.json()) as { data: SearchAll };

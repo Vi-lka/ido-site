@@ -62,8 +62,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({
   children,
+  drawer,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  drawer: React.ReactNode
 }) {
   return (
     <html
@@ -73,7 +75,9 @@ export default function RootLayout({
     >
       <body className="m-0 flex min-h-screen flex-col">
         <Providers>
-          <Header />
+          <Header>
+            {drawer}
+          </Header>
           <div className="flex-1 py-20">{children}</div>
           <Footer />
         </Providers>

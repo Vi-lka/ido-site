@@ -376,7 +376,12 @@ export const SearchAll = z.object({
           year: z.number()
         }),
         category: z.object({
-          data: EventsCategory.nullable()
+          data: z.object({
+            attributes: z.object({
+              slug: z.string(),
+              title: z.string()
+            })
+          }).nullable()
         }),
       })
     }).array()
@@ -386,8 +391,53 @@ export const SearchAll = z.object({
       id: z.string(),
       attributes: z.object({
         title: z.string(),
-        description: z.string(),
+        description: z.string().nullable(),
         image: Image,
+        section: z.object({
+          data: z.object({
+            attributes: z.object({
+              slug: z.string(),
+              title: z.string()
+            })
+          }).nullable()
+        }),
+      })
+    }).array()
+  }),
+  books: z.object({
+    data: z.object({
+      id: z.string(),
+      attributes: z.object({
+        title: z.string(),
+        image: Image,
+        section: z.object({
+          data: z.object({
+            attributes: z.object({
+              slug: z.string(),
+              title: z.string()
+            })
+          }).nullable()
+        }),
+      })
+    }).array()
+  }),
+  projects: z.object({
+    data: z.object({
+      id: z.string(),
+      attributes: z.object({
+        title: z.string(),
+        description: z.string().nullable(),
+        image: Image,
+      })
+    }).array()
+  }),
+  news: z.object({
+    data: z.object({
+      id: z.string(),
+      attributes: z.object({
+        title: z.string(),
+        image: Image,
+        date: z.string(),
       })
     }).array()
   }),

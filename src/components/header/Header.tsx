@@ -7,8 +7,13 @@ import { ClientHydration } from "../providers/ClientHydration";
 import { Skeleton } from "../ui/skeleton";
 import { ThemeToggle } from "../providers/ThemeToggle";
 import { getMainPage } from "@/lib/queries/main";
+import SearchDrawer from "../search/SearchDrawer";
 
-export default async function Header() {
+export default async function Header({
+  children
+}: {
+  children: React.ReactNode
+}) {
 
   let name = "";
 
@@ -55,6 +60,19 @@ export default async function Header() {
           >
             <ThemeToggle />
           </ClientHydration>
+
+          <ClientHydration
+            fallback={
+              <div className="mr-2 flex gap-6">
+                <Skeleton className="w-6 p-4 bg-muted" />
+              </div>
+            }
+          >
+            <SearchDrawer>
+              {children}
+            </SearchDrawer>
+          </ClientHydration>
+
           {/* 
           {!!session ? (
             <AccountBar dict={dictResult.account} name={session.user.name} />
