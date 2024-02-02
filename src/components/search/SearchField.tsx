@@ -42,6 +42,8 @@ export default function SearchField({ placeholder, className }: { placeholder: s
       const params = new URLSearchParams(window.location.search)
       const searchQuery = params.get("searchAll") ?? ""
       setInputValue(searchQuery)
+      inputRef.current?.focus()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // EFFECT: Set Mounted
@@ -79,30 +81,29 @@ export default function SearchField({ placeholder, className }: { placeholder: s
         onBlur={() => setFocus(false)}
         placeholder={placeholder}
         className={cn(
-          "border-primary hover:border-secondary focus:border-secondary transition-all",
+          "border-primary hover:border-secondary focus:border-secondary transition-all py-0 appearance-none",
           focus ? 
             'w-full ring-ring ring-2 ring-offset-2 border-secondary' 
             : 
             'w-full'
         )}
       >
-        <Search className="h-4 w-4" />
+        {isPending 
+          ? <Loader2 className='h-4 w-4 animate-spin' />
+          : <Search className="h-4 w-4" />
+        }
       </InputSearch>
       
-      {isPending ? (
-        <div className="absolute top-2 right-2">
-          <Loader2 className='animate-spin mx-auto' />
-        </div>
-      ) : null}
-      
-      {((inputValue.length > 0) && !isPending) ? (
+      {inputValue.length > 0 ? (
           <Button 
               variant='ghost'
               className="absolute top-2 right-2 w-fit h-fit p-0"
+              disabled={isPending}
               onClick={() => {
-                  setDebouncedValue('')
-                  setInputValue('')
+                setDebouncedValue('')
+                setInputValue('')
               }}
+              onClickCapture={() => inputRef.current?.focus()}
           >
               <X className='w-8 h-6' />
           </Button>

@@ -11,12 +11,12 @@ export default function SearchPageDrawer({
 
   return (
     <>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 lg:mb-6 mb-2">
         <SearchField placeholder="Найти..." className="flex-1" />
       </div>
 
       <Suspense fallback={
-        <div className="mx-auto w-[85%] max-w-[1600px] pt-20">
+        <div className="mx-auto w-[85%] max-w-[1600px] py-2">
           <Loader2 className="mx-auto h-12 w-12 animate-spin" />
         </div>
       }>

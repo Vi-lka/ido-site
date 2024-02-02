@@ -12,6 +12,7 @@ export default function SearchDrawer({
 }: {
     children: React.ReactNode
 }) {
+    const [open, setOpen] = useState(false)
     const [prevPath, setPrevPath] = useState("")
 
     const router = useRouter()
@@ -20,31 +21,28 @@ export default function SearchDrawer({
     const params = new URLSearchParams(window.location.search);
 
     useEffect(() => {
-      if (pathName !== "/search") setPrevPath(pathName)
-    }, [pathName])
+        if (pathName !== "/search") {
+            setPrevPath(pathName)
+
+            const paramsEffect = new URLSearchParams(window.location.search);
+            paramsEffect.delete("searchAll");
+            router.push(`${prevPath}?${paramsEffect.toString()}`, { scroll: false });
+            setOpen(false)
+        }
+    }, [pathName, prevPath, router])
 
   return (
     <>
-        <Drawer onClose={() => {
-            params.delete("searchAll");
-            router.push(`${prevPath}?${params.toString()}`, { scroll: false });
-        }}>
-            {/* {pathName !== "/search"
-                ? ( */}
-                    <Link href={"/search"}>
-                        <DrawerTrigger asChild>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                aria-label="Toggle Search Drawer"
-                                className="px-3 py-5"
-                            >
-                                <Search className='h-[1.5rem] w-[1.5rem]' />
-                            </Button>
-                        </DrawerTrigger>
-                    </Link>
-                {/* )
-                : (
+        <Drawer 
+            open={open}
+            onClose={() => {
+                setOpen(false)
+                params.delete("searchAll");
+                router.push(`${prevPath}?${params.toString()}`, { scroll: false });
+            }}
+        >
+            <Link href={"/search"}>
+                <DrawerTrigger asChild onClick={() => setOpen((prev) => !prev)}>
                     <Button
                         variant="ghost"
                         size="sm"
@@ -53,11 +51,11 @@ export default function SearchDrawer({
                     >
                         <Search className='h-[1.5rem] w-[1.5rem]' />
                     </Button>
-                )
-            } */}
-            <DrawerContent>
-                <div className="font-Raleway mx-auto w-full lg:max-w-5xl sm:max-w-lg max-w-xs">
-                    <DrawerHeader>
+                </DrawerTrigger>
+            </Link>
+            <DrawerContent onPointerDownOutside={() => setOpen(false)}>
+                <div className="font-Raleway mx-auto w-full h-fit lg:max-w-5xl sm:max-w-lg max-w-xs">
+                    <DrawerHeader className='flex justify-between w-full'>
                         <DrawerTitle className='flex items-center gap-1.5 lg:text-xl text-lg'>
                             <Search className='lg:h-[1.5rem] lg:w-[1.5rem] h-[1.2rem] w-[1.2rem]' />
                             Поиск
@@ -65,10 +63,12 @@ export default function SearchDrawer({
                         {/* <DrawerDescription>Введите название:</DrawerDescription> */}
                     </DrawerHeader>
 
-                    {children}
+                    <div className='lg:h-[70vh] h-[65vh]'>
+                        {children}
+                    </div>
 
                     <DrawerFooter>
-                        <DrawerClose>
+                        <DrawerClose onClick={() => setOpen(false)}>
                             <Button variant="secondary">Закрыть</Button>
                         </DrawerClose>
                     </DrawerFooter>
