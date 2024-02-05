@@ -355,7 +355,7 @@ export const Projects = z.object({
     id: z.string(),
     attributes: z.object({
       title: z.string(),
-      description: z.string(),
+      description: z.string().nullable(),
       image: Image,
     })
   }).array(),

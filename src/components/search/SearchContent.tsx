@@ -7,6 +7,8 @@ import ImgItem from '../thumbnails/ImgItem';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { ScrollArea } from '../ui/scroll-area';
+import ImageComponent from '../thumbnails/ImageComponent';
+import IconBooksSvg from '../svg/IconBooksSvg';
 
 export default async function SearchContent({
   searchParams,
@@ -75,7 +77,7 @@ export default async function SearchContent({
         })}
       </TabsList>
 
-      <ScrollArea className="w-full rounded-md bg-background h-full" classNameViewport="max-h-full mt-2">
+      <ScrollArea type='always' className="w-full rounded-md bg-background h-full" classNameViewport="max-h-full mt-2">
         <TabsContent value="events">
             {dataResult.value.events.data.map(event => {
               const dateName = getDateName({
@@ -113,7 +115,7 @@ export default async function SearchContent({
                       {/* Desktop */}
                       <p className="whitespace-pre-line sm:block hidden text-xs">{event.attributes.description}</p>
                       {/* Mobile */}
-                      <p className="whitespace-pre-line sm:hidden block">{getShortDescription(event.attributes.description)}</p>
+                      <p className="whitespace-pre-line sm:hidden block text-xs">{getShortDescription(event.attributes.description)}</p>
                     </div>
                     <Link href={`/events/${event.id}`} passHref className='w-fit h-fit mb-2'>
                       <Button className='font-Raleway font-semibold text-sm lg:px-10 px-8 py-4 hover:bg-primary/90'>
@@ -125,10 +127,129 @@ export default async function SearchContent({
               )
             })}
         </TabsContent>
-        <TabsContent value="methodResources">{dataResult.value.methodResources.data.length}</TabsContent>
-        <TabsContent value="books">{dataResult.value.books.data.length}</TabsContent>
-        <TabsContent value="news">{dataResult.value.news.data.length}</TabsContent>
-        <TabsContent value="projects">{dataResult.value.projects.data.length}</TabsContent>
+        <TabsContent value="methodResources">
+          <div className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-16 md:w-full">
+            {dataResult.value.methodResources.data.map(method => (
+                <div key={method.id} className="flex lg:flex-row flex-col items-center justify-between gap-6">
+                  <div className="flex items-center lg:w-1/6 w-full lg:justify-normal justify-center">
+                    {method.attributes.image.data ?
+                        <Link href={`/methodological/${method.attributes.section.data?.attributes.slug}/${method.id}`} className="aspect-square w-full lg:max-w-[180px] max-w-[140px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent ml-2">
+                            <ImageComponent
+                              src={method.attributes.image.data?.attributes.url}
+                              alt={method.attributes.title}
+                              fill={false}
+                              width={180}
+                              height={180}
+                              priority
+                              className="w-full h-full object-cover"
+                            />
+                        </Link>
+                      : (
+                      <Link href={`/methodological/${method.attributes.section.data?.attributes.slug}/${method.id}`} className="aspect-square w-full lg:max-w-[160px] max-w-[120px] hover:scale-105 transition-all duration-200">
+                        <IconBooksSvg className='w-full h-full' />
+                      </Link>
+                    )}
+                  </div>
+                      
+                  <div className="font-Raleway flex flex-col justify-between gap-6 w-full h-full">
+                    <div className="font-Raleway flex flex-col gap-1 w-full">
+                      <Link href={`/methodological/${method.attributes.section.data?.attributes.slug}/${method.id}`} className="hover:text-primary transition-all">
+                        <h1 className="font-bold text-base">{method.attributes.title}</h1>
+                      </Link>
+                      {method.attributes.description && (<>
+                        {/* Desktop */}
+                        <p className="whitespace-pre-line sm:block hidden text-xs">{method.attributes.description}</p>
+                        {/* Mobile */}
+                        <p className="whitespace-pre-line sm:hidden block text-xs">{getShortDescription(method.attributes.description)}</p>
+                      </>)}
+                    </div>
+                    <Link href={`/methodological/${method.attributes.section.data?.attributes.slug}/${method.id}`} passHref className='w-fit h-fit mb-2'>
+                      <Button className='font-Raleway font-semibold text-sm lg:px-10 px-8 py-4 hover:bg-primary/90'>
+                        Открыть
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </TabsContent>
+        <TabsContent value="books">
+          <div className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-6 md:w-full md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[3000px]:grid-cols-5 min-[4000px]:grid-cols-6">
+            {dataResult.value.books.data.map(book => (
+              <ImgItem
+                key={book.id}
+                href={`/library/${book.attributes.section.data?.attributes.slug}/${book.id}`}
+                src={book.attributes.image.data?.attributes.url}
+                title={book.attributes.title}
+                width={200}
+                height={200}
+                className='max-w-[200px] mx-auto'
+                classNameParagraph='text-xs lg:text-sm'
+              />
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="news">
+          <div className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-6 md:w-full md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[3000px]:grid-cols-5 min-[4000px]:grid-cols-6">
+            {dataResult.value.news.data.map(news => {
+              const date = new Date(news.attributes.date);
+                const dateName = date.toLocaleString('ru', { day: "numeric", month: 'long', year: "numeric" });
+            
+              return (
+                <ImgItem
+                  key={news.id}
+                  href={`/news/${news.id}`}
+                  src={news.attributes.image.data?.attributes.url}
+                  title={news.attributes.title}
+                  objectContain
+                  width={200}
+                  height={200}
+                  className='max-w-[200px] mx-auto'
+                  classNameParagraph='text-xs lg:text-sm'
+                >
+                  <p className="font-Raleway text-sm text-primary">{dateName}</p>
+                </ImgItem>
+              )
+            })}
+          </div>
+        </TabsContent>
+        <TabsContent value="projects">
+          <div className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-16 md:w-full">
+            {dataResult.value.projects.data.map(project => (
+                <div key={project.id} className="flex lg:flex-row flex-col items-start justify-between lg:gap-6 gap-3">
+                  <div className="flex items-start justify-around lg:w-2/5 w-full">
+                    <ImgItem
+                      href={`/projects/${project.id}`}
+                      src={project.attributes.image.data?.attributes.url}
+                      title={null}
+                      className="lg:w-4/6 w-1/2 max-w-md"
+                    />
+                  </div>
+            
+                  <div className="font-Raleway flex flex-col justify-between gap-6 w-full h-full">
+                    <div className="font-Raleway flex flex-col gap-1 w-full">
+                      <Link href={`/projects/${project.id}`} className="hover:text-primary transition-all">
+                        <h1 className="font-bold text-base">{project.attributes.title}</h1>
+                      </Link>
+                      {project.attributes.description && (<>
+                        {/* Desktop */}
+                        <p className="whitespace-pre-line sm:block hidden text-xs">{getShortDescription(project.attributes.description, 50)}</p>
+                        {/* Mobile */}
+                        <p className="whitespace-pre-line sm:hidden block text-xs">{getShortDescription(project.attributes.description)}</p>
+                      </>)}
+                    </div>
+                    <Link href={`/projects/${project.id}`} passHref className='w-fit h-fit mb-2'>
+                      <Button className='font-Raleway font-semibold text-sm lg:px-10 px-8 py-4 hover:bg-primary/90'>
+                        Читать далее
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </TabsContent>
       </ScrollArea>
     </Tabs>
   )

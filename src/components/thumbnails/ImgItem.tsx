@@ -14,6 +14,7 @@ type Props = {
   height?: number;
   objectContain?: boolean
   className?: string;
+  classNameParagraph?: string;
   children?: React.ReactNode
 };
 
@@ -45,7 +46,10 @@ export default function ImgItem(props: Props) {
 
         {props.children}
         
-        <p className="font-Raleway text-sm font-normal lg:text-base">
+        <p className={cn(
+          "font-Raleway text-sm font-normal lg:text-base",
+          props.classNameParagraph
+        )}>
           {props.title}
         </p>
       </div>

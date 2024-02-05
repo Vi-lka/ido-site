@@ -68,10 +68,12 @@ export default async function ProjectsContent({
                     <Link href={`/projects/${project.id}`} className="hover:text-primary transition-all">
                       <h1 className="font-bold text-lg">{project.attributes.title}</h1>
                     </Link>
-                    {/* Desktop */}
-                    <p className="whitespace-pre-line sm:block hidden">{project.attributes.description}</p>
-                    {/* Mobile */}
-                    <p className="whitespace-pre-line sm:hidden block">{getShortDescription(project.attributes.description)}</p>
+                    {project.attributes.description && (<>
+                      {/* Desktop */}
+                      <p className="whitespace-pre-line sm:block hidden">{project.attributes.description}</p>
+                      {/* Mobile */}
+                      <p className="whitespace-pre-line sm:hidden block">{getShortDescription(project.attributes.description)}</p>
+                    </>)}
                   </div>
                   <Link href={`/projects/${project.id}`} passHref className='w-fit h-fit mb-2'>
                     <Button className='font-Raleway font-semibold lg:px-14 px-12 py-6 hover:bg-primary/90'>

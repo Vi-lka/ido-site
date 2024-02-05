@@ -63,7 +63,7 @@ export default function SearchDrawer({
                         {/* <DrawerDescription>Введите название:</DrawerDescription> */}
                     </DrawerHeader>
 
-                    <div className='lg:h-[70vh] h-[65vh]'>
+                    <div className='h-[70dvh]'>
                         {children}
                     </div>
 
