@@ -6,8 +6,7 @@ export const getProjectByID = async ({
 }: {
     id: string,
 }): Promise<ProjectSingle> => {
-    const headers = { 
-      Authorization: `bearer ${process.env.API_TOKEN}`,
+    const headers = {
       "Content-Type": "application/json"
     };
     const query = /* GraphGL */ `
@@ -129,8 +128,7 @@ export const getProjects = async ({
     sort?: string;
     search?: string;
 }): Promise<Projects> => {
-    const headers = { 
-      Authorization: `bearer ${process.env.API_TOKEN}`,
+    const headers = {
       "Content-Type": "application/json"
     };
     const query = /* GraphGL */ `

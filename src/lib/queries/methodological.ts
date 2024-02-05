@@ -6,8 +6,7 @@ export const getMethodologicalByID = async ({
 }: {
   id: string,
 }): Promise<Methodological> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -152,8 +151,7 @@ export const getMethodological = async ({
   search?: string;
   section?: string;
 }): Promise<Methodologicals> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `

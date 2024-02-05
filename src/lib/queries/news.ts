@@ -6,8 +6,7 @@ export const getNewByID = async ({
 }: {
   id: string,
 }): Promise<NewsSingle> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -122,8 +121,7 @@ export const getNews = async ({
   sort?: string;
   search?: string;
 }): Promise<News> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `

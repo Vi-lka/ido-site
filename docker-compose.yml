@@ -3,8 +3,6 @@ version: '3'
 services:
   ido-site:
     container_name: ido-site
-    env_file:
-      - .env
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +11,6 @@ services:
         NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL}
         NEXT_PUBLIC_STRAPI_DOMAIN: ${NEXT_PUBLIC_STRAPI_DOMAIN}
         REVALIDATE_TOKEN: ${REVALIDATE_TOKEN}
-        API_TOKEN: ${API_TOKEN}
     restart: always
     volumes:
       - next_cache:/app/.next/cache

@@ -3,8 +3,7 @@ import type { Section} from "../types/entity-types";
 import { AboutPage, Contacts, MainPage, PageDescriptions, SearchAll, Sections } from "../types/entity-types";
 
 export const getMainPage = async (): Promise<MainPage> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
 
@@ -58,8 +57,7 @@ export const getMainPage = async (): Promise<MainPage> => {
 };
 
 export const getPageDescriptions = async (): Promise<PageDescriptions> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -134,8 +132,7 @@ export const getPageDescriptions = async (): Promise<PageDescriptions> => {
 };
 
 export const getAboutPage = async (): Promise<AboutPage> => {
-  const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -230,7 +227,6 @@ export const getAboutPage = async (): Promise<AboutPage> => {
 
 export const getContacts = async (): Promise<Contacts> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -295,7 +291,6 @@ export const getSections = async ({
   type?: "books" | "methodological"
 }): Promise<Sections> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -391,7 +386,6 @@ export const getSections = async ({
 
 export const getSectionBySlug = async (slug: string): Promise<Section> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -460,7 +454,6 @@ export const getSectionBySlug = async (slug: string): Promise<Section> => {
 
 export const getSearchAll = async (search = ""): Promise<SearchAll> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `

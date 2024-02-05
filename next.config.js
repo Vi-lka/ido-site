@@ -8,7 +8,6 @@ const nextConfig = {
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     NEXT_PUBLIC_STRAPI_API_URL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
     NEXT_PUBLIC_STRAPI_DOMAIN: process.env.NEXT_PUBLIC_STRAPI_DOMAIN,
-    API_TOKEN: process.env.API_TOKEN
   },
   images: {
     remotePatterns: [

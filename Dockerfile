@@ -30,8 +30,6 @@ ARG NEXT_PUBLIC_STRAPI_DOMAIN
 ENV NEXT_PUBLIC_STRAPI_DOMAIN=${NEXT_PUBLIC_STRAPI_DOMAIN}
 ARG REVALIDATE_TOKEN
 ENV REVALIDATE_TOKEN=${REVALIDATE_TOKEN}
-ARG API_TOKEN
-ENV API_TOKEN=${API_TOKEN}
 
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
@@ -74,8 +72,6 @@ ARG NEXT_PUBLIC_STRAPI_DOMAIN
 ENV NEXT_PUBLIC_STRAPI_DOMAIN=${NEXT_PUBLIC_STRAPI_DOMAIN}
 ARG REVALIDATE_TOKEN
 ENV REVALIDATE_TOKEN=${REVALIDATE_TOKEN}
-ARG API_TOKEN
-ENV API_TOKEN=${API_TOKEN}
 
 RUN chown -R nextjs ./.next/cache
 USER nextjs

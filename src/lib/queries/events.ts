@@ -7,7 +7,6 @@ export const getEventByID = async ({
   id: string,
 }): Promise<Event> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -152,7 +151,6 @@ export const getEvents = async ({
   category?: string;
 }): Promise<Events> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -259,7 +257,6 @@ export const getEventsCategories = async ({
   search?: string;
 }): Promise<EventsCategories> => {
   const headers = { 
-    Authorization: `bearer ${process.env.API_TOKEN}`,
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
