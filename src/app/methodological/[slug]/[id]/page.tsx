@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getMethodologicalByID } from '@/lib/queries/methodological';
 import React from 'react'

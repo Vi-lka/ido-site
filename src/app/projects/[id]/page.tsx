@@ -68,7 +68,6 @@ export default async function MethodologicalSingle({
 
         {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
-            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
             <BlocksRendererStrapi content={dataResult.value.attributes.text} />
           </div>
         )}

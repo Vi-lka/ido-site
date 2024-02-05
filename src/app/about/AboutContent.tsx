@@ -22,7 +22,6 @@ export default async function AboutContent() {
             className="mx-auto my-12 grid w-[85%] grid-cols-1 gap-16 md:w-full"
         >
             <div className="flex flex-col gap-12">
-                {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
                 {dataResult.value.content?.map((item, index) => (
                     <DynamicZone key={index} item={item} />
                 ))}

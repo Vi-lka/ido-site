@@ -3,6 +3,8 @@ version: '3'
 services:
   ido-site:
     container_name: ido-site
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
