@@ -37,7 +37,7 @@ export default function ImgItem(props: Props) {
           width={props.width ? props.width : 450}
           height={props.height ? props.height : 450}
           className={cn(
-            "aspect-square object-cover dark:shadow-foreground/20 outline-accent ring-ring ring-offset-background w-full overflow-hidden rounded-md shadow-md outline outline-1 outline-offset-1 transition-all duration-200",
+            "aspect-square object-cover dark:shadow-foreground/20 outline-accent w-full overflow-hidden rounded-md shadow-md transition-all duration-200",
             props.objectContain ? "object-contain" : "object-cover",
           )}
           alt={props.title ? props.title : ""}

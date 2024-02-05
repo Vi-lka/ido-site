@@ -133,7 +133,7 @@ export default async function SearchContent({
                 <div key={method.id} className="flex lg:flex-row flex-col items-center justify-between gap-6">
                   <div className="flex items-center lg:w-1/6 w-full lg:justify-normal justify-center">
                     {method.attributes.image.data ?
-                        <Link href={`/methodological/${method.attributes.section.data?.attributes.slug}/${method.id}`} className="aspect-square w-full lg:max-w-[180px] max-w-[140px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent ml-2">
+                        <Link href={`/methodological/${method.attributes.section.data?.attributes.slug}/${method.id}`} className="aspect-square w-full lg:max-w-[180px] max-w-[140px] rounded-full overflow-hidden transition-all duration-200 break-inside-avoid hover:scale-105 ml-2">
                             <ImageComponent
                               src={method.attributes.image.data?.attributes.url}
                               alt={method.attributes.title}

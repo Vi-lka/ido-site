@@ -60,7 +60,7 @@ export default async function MethodologicalContent({
             <div key={method.id} className="flex lg:flex-row flex-col items-center justify-between gap-6">
               <div className="flex items-center lg:w-1/6 w-full lg:justify-normal justify-center">
                 {method.attributes.image.data ?
-                    <Link href={`/methodological/${section}/${method.id}`} className="aspect-square w-full lg:max-w-[250px] max-w-[200px] rounded-full overflow-hidden hover:ring ring-ring ring-offset-2 transition-all duration-200 break-inside-avoid outline outline-2 outline-offset-0 outline-accent hover:scale-105">
+                    <Link href={`/methodological/${section}/${method.id}`} className="aspect-square w-full lg:max-w-[250px] max-w-[200px] rounded-full overflow-hidden transition-all duration-200 break-inside-avoid hover:scale-105">
                         <ImageComponent
                           src={method.attributes.image.data?.attributes.url}
                           alt={method.attributes.title}
