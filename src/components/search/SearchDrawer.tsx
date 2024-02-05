@@ -41,7 +41,7 @@ export default function SearchDrawer({
                 router.push(`${prevPath}?${params.toString()}`, { scroll: false });
             }}
         >
-            <Link href={"/search"}>
+            <Link href={"/search"} passHref>
                 <DrawerTrigger asChild onClick={() => setOpen((prev) => !prev)}>
                     <Button
                         variant="ghost"
@@ -68,7 +68,7 @@ export default function SearchDrawer({
                     </div>
 
                     <DrawerFooter>
-                        <DrawerClose onClick={() => setOpen(false)}>
+                        <DrawerClose asChild onClick={() => setOpen(false)} className='w-fit mx-auto'>
                             <Button variant="secondary">Закрыть</Button>
                         </DrawerClose>
                     </DrawerFooter>
