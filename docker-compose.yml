@@ -11,6 +11,7 @@ services:
         NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL}
         NEXT_PUBLIC_STRAPI_DOMAIN: ${NEXT_PUBLIC_STRAPI_DOMAIN}
         REVALIDATE_TOKEN: ${REVALIDATE_TOKEN}
+        API_TOKEN: ${API_TOKEN}
     restart: always
     volumes:
       - next_cache:/app/.next/cache
