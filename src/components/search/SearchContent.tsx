@@ -184,6 +184,7 @@ export default async function SearchContent({
                 title={book.attributes.title}
                 width={200}
                 height={200}
+                objectContain
                 className='max-w-[200px] mx-auto'
                 classNameParagraph='text-xs lg:text-sm'
               />

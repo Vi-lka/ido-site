@@ -58,6 +58,7 @@ export default async function LibraryContent({
             href={`/library/${section}/${book.id}`}
             src={book.attributes.image.data?.attributes.url}
             title={book.attributes.title}
+            objectContain
           />
         ))}
       </div>
