@@ -1,6 +1,7 @@
 import {  clsx } from "clsx"
 import type {ClassValue} from "clsx";
 import { twMerge } from "tailwind-merge"
+import Cryptr from "cryptr"
  
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -24,4 +25,20 @@ export function getDateName({ day, month, year }: { day: number, month: number, 
   const dateName = date.toLocaleString('ru', { day: "numeric", month: 'long', year: "numeric" });
 
   return dateName
+}
+
+export function encrypt(text: string) {
+    const secretKey = process.env.NEXTAUTH_SECRET || "";
+    const cryptr = new Cryptr(secretKey);
+
+    const encryptedString = cryptr.encrypt(text);
+    return encryptedString;
+}
+
+export function decrypt(encryptedString: string) {
+    const secretKey = process.env.NEXTAUTH_SECRET || "";
+    const cryptr = new Cryptr(secretKey);
+
+    const text = cryptr.decrypt(encryptedString);
+    return text;
 }

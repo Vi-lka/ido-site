@@ -2,14 +2,14 @@
 
 import React from "react";
 import { Provider } from "jotai";
-// import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { ThemeProviderProps } from "next-themes/dist/types";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <ThemeProvider 
             attribute="class" 
             defaultTheme="system"
@@ -18,7 +18,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         >
           {children}
         </ThemeProvider>
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </Provider>
   );
 }
@@ -38,6 +38,6 @@ function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
 
-// function AuthProvider({ children }: { children: React.ReactNode }) {
-//   return <SessionProvider>{children}</SessionProvider>;
-// }
+function AuthProvider({ children }: { children: React.ReactNode }) {
+  return <SessionProvider>{children}</SessionProvider>;
+}
