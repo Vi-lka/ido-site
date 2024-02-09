@@ -1,19 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Toggle } from "../ui/toggle";
 
 export default function LogInForm() {
+
+  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
   const { toast } = useToast();
@@ -39,7 +42,7 @@ export default function LogInForm() {
 
   const handleLogIn = async (data: z.infer<typeof LogInFormSchema>) => {
     try {
-      const res = await signIn("credentials", {
+      const res = await signIn("credentials-login", {
         redirect: false,
         email: data.email,
         password: data.password,
@@ -51,10 +54,19 @@ export default function LogInForm() {
         throw new Error(res.error ? res.error : "Error")
       }
     } catch (error) {
+      console.log(error)
+
+      const errorMessage = 
+        `${error}` === "Error: Your account email is not confirmed" 
+          ? "Адрес вашей электронной почты не подтвержден"
+          : `${error}` === "Error: Invalid identifier or password"
+            ? "Неверный логин или пароль"
+            : `${error}`
+
       toast({
         variant: "destructive",
         title: "Ошибка доступа",
-        description: "Неправильный логин или пароль",
+        description: errorMessage,
         className: "font-Raleway",
       });
     }
@@ -73,13 +85,14 @@ export default function LogInForm() {
             name="email"
             defaultValue=""
             render={({ field }) => (
-              <FormItem className="text-center">
+              <FormItem>
+                <FormLabel>Логин</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     disabled={form.formState.isSubmitting}
-                    className="mb-0 p-5"
-                    placeholder={"Почта"}
+                    className="px-5 py-6 shadow dark:border-foreground/50"
+                    placeholder={"Введите почту или имя пользователя"}
                     {...field}
                   />
                 </FormControl>
@@ -92,22 +105,37 @@ export default function LogInForm() {
             name="password"
             defaultValue=""
             render={({ field }) => (
-              <FormItem className="text-center">
+              <FormItem className="mt-8 relative">
+                <FormLabel>Пароль</FormLabel>
                 <FormControl>
                   <Input
-                    type="password"
+                    type={
+                      showPassword ? "text" : "password"
+                    }
+                    autoComplete="on"
                     disabled={form.formState.isSubmitting}
-                    className="mb-0 mt-6 p-5"
-                    placeholder={"Пароль"}
+                    className="px-5 py-6 shadow dark:border-foreground/50"
+                    placeholder={"Введите пароль"}
                     {...field}
                   />
                 </FormControl>
+                <Toggle 
+                    pressed={showPassword}
+                    aria-label="Toggle Show Password"
+                    className="absolute top-8 right-1 px-2"
+                    onPressedChange={(pressed) => setShowPassword(pressed)}
+                  >
+                      {showPassword
+                        ? <EyeOff />
+                        : <Eye />
+                      }
+                  </Toggle>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="mt-6 flex flex-col-reverse items-center justify-between sm:flex-row">
-            <Link href={`/reset`} className="text-sm underline">
+            <Link href={`/reset`} className="text-sm underline hover:text-primary transition-all">
               Сбросить пароль
             </Link>
             <Button

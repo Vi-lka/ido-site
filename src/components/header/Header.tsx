@@ -8,6 +8,9 @@ import { Skeleton } from "../ui/skeleton";
 import { ThemeToggle } from "../providers/ThemeToggle";
 import { getMainPage } from "@/lib/queries/main";
 import SearchDrawer from "../search/SearchDrawer";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import { AccountBar, SignInButton } from "../auth/AuthButtons";
 
 export default async function Header({
   children
@@ -23,6 +26,8 @@ export default async function Header({
   } else {
     name = dataResult.value.name
   }
+
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="font-Raleway fixed z-50 w-full px-4 md:px-0 bg-background border-b-2 border-accent">
@@ -71,6 +76,19 @@ export default async function Header({
             <SearchDrawer>
               {children}
             </SearchDrawer>
+          </ClientHydration>
+
+          <ClientHydration
+            fallback={
+              <div className="mr-2 flex gap-6">
+                <Skeleton className="w-6 p-4 bg-muted" />
+              </div>
+            }
+          >
+            {session
+              ? <AccountBar name={session.user.username} />
+              : <SignInButton icon variant="ghost" className="px-2.5 py-5" />
+            }
           </ClientHydration>
 
           {/* 

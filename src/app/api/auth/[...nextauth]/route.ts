@@ -5,11 +5,19 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import axios from 'axios'
 import { encrypt } from "@/lib/utils";
 
+type Err = {
+  error: {
+    status: number,
+    name: string,
+    message: string,
+  }
+}
+
 export const authOptions: AuthOptions = {
     providers: [
-      // Configure the Credentials provider
+      // Configure the Credentials provider for Login
       CredentialsProvider({
-        id: "credentials",
+        id: "credentials-login",
         name: "Credentials",
         credentials: {
             email: { label: "Email", type: "text", placeholder: "mail@mail.com" },
@@ -28,13 +36,53 @@ export const authOptions: AuthOptions = {
             else {
               return null;
             }
-          } catch (e) {
-            console.log('caught error');
-            console.log(e);
-            const errorMessage = e
-            // Redirecting to the login page with error message in the URL
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            throw new Error(errorMessage + '&email=' + credentials?.email)
+          } catch (err) {
+            if (axios.isAxiosError(err) && err.response) {
+              const errorMessage = (err.response.data as Err).error.message
+              console.log("AxiosError: ", errorMessage)
+              throw new Error(errorMessage)
+            } else {
+              const errorMessage = (err as Error).message
+              console.log("Error: ", errorMessage)
+              throw new Error(errorMessage)
+            }
+          }
+        }
+      }),
+      // Configure the Credentials provider for Register
+      CredentialsProvider({
+        id: "credentials-register",
+        name: "Credentials",
+        credentials: {
+          username: { label: "User Name", type: "text", placeholder: "username" },
+          email: { label: "Email", type: "text", placeholder: "mail@mail.com" },
+          password: {  label: "Password", type: "password" }
+        },
+        async authorize(credentials) {
+          try {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/auth/local/register`, {
+              username: credentials?.username,
+              email: credentials?.email,
+              password: credentials?.password
+            });
+            if (data) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+              return data;
+            }
+            else {
+              return null;
+            }
+          } catch (err) {
+            console.log(err)
+            if (axios.isAxiosError(err) && err.response) {
+              const errorMessage = (err.response.data as Err).error.message
+              console.log("AxiosError: ", errorMessage)
+              throw new Error(errorMessage)
+            } else {
+              const errorMessage = (err as Error).message
+              console.log("Error: ", errorMessage)
+              throw new Error(errorMessage)
+            }
           }
         }
       }),
@@ -50,17 +98,20 @@ export const authOptions: AuthOptions = {
           token.email = user.user.email;
           token.confirmed = user.user.confirmed
           token.blocked = user.user.blocked
+          token.subscribed = user.user.subscribed
         }
         return Promise.resolve(token);
       },
     
       session: async ({session, token}) => {
-        session.jwt = encrypt(token.jwt);
+        if (!token.jwt || token.jwt.length === 0) throw new Error("No jwt token")
+        session.jwt = encrypt(token.jwt); 
         session.user.id = token.id
         session.user.username = token.name
         session.user.email = token.email
         session.user.confirmed = token.confirmed
         session.user.blocked = token.blocked
+        session.user.subscribed = token.subscribed
         return Promise.resolve(session);
       },
     }
@@ -83,9 +134,11 @@ declare module "next-auth" {
             provider: string,
             confirmed: boolean,
             blocked: boolean,
+            subscribed: boolean,
             createdAt: string,
             updatedAt: string
         }
+        expires: string
     }
 
     // Define custom user properties
@@ -98,25 +151,11 @@ declare module "next-auth" {
             provider: string,
             confirmed: boolean,
             blocked: boolean,
+            subscribed: boolean,
             createdAt: string,
             updatedAt: string
         };
     }
-
-    // Define custom session properties
-    interface Session {
-        user: {
-            id: number;
-            username: string;
-            email: string;
-            provider: string,
-            confirmed: boolean,
-            blocked: boolean,
-            createdAt: string,
-            updatedAt: string
-        },
-        expires: string
-    }      
 }
 
 
@@ -127,100 +166,11 @@ declare module "next-auth/jwt" {
         email: string,
         confirmed: boolean,
         blocked: boolean,
+        subscribed: boolean,
         jwt: string,
         id: number,
         iat: number,
         exp: number,
         jti: string
     }
-  }
-
-// // Declare custom types for NextAuth modules
-// declare module "next-auth" {
-//     // Define custom session properties
-//     interface Session {
-//       user: {
-//         sub: string;
-//         email_verified: boolean;
-//         name: string;
-//         preferred_username: string;
-//         given_name: string;
-//         family_name: string;
-//         email: string;
-//         id: string;
-//         org_name?: string;
-//         telephone?: string;
-//         roles?: string[];
-//       };
-//       error?: string | null;
-//       access_token: string;
-//     }
-  
-//     // Define custom user properties
-//     interface User {
-//       sub: string;
-//       email_verified: boolean;
-//       name: string;
-//       telephone: string;
-//       preferred_username: string;
-//       org_name: string;
-//       given_name: string;
-//       family_name: string;
-//       email: string;
-//       id: string;
-//       tokens?: Account;
-//     }
-  
-//     // Define custom account properties
-//     interface Account {
-//       provider: string;
-//       type: ProviderType;
-//       id: string;
-//       access_token: string;
-//       refresh_token: string;
-//       idToken: string;
-//       expires_in: number;
-//       refresh_expires_in: number;
-//       token_type: string;
-//       id_token: string;
-//       "not-before-policy": number;
-//       session_state: string;
-//       scope: string;
-//     }
-  
-//     // Define custom profile properties
-//     interface Profile {
-//       sub?: string;
-//       email_verified: boolean;
-//       name?: string;
-//       telephone: string;
-//       preferred_username: string;
-//       org_name: string;
-//       given_name: string;
-//       family_name: string;
-//       email?: string;
-//     }
-//   }
-
-// // Declare custom JWT properties
-// declare module "next-auth/jwt" {
-//     interface JWT {
-//       access_token: string;
-//       refresh_token: string;
-//       refresh_expires_in: number;
-//       expires_in: number;
-//       user: {
-//         sub: string;
-//         email_verified: boolean;
-//         name: string;
-//         telephone: string;
-//         preferred_username: string;
-//         org_name: string;
-//         given_name: string;
-//         family_name: string;
-//         email: string;
-//         id: string;
-//       };
-//       error?: string | null;
-//     }
-//   }
+}
