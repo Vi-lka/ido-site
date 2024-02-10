@@ -654,3 +654,165 @@ export const getSearchAll = async (search = ""): Promise<SearchAll> => {
 
   return data;
 };
+
+export const getLastContent = async (time: string): Promise<SearchAll> => {
+  const headers = { 
+    "Content-Type": "application/json"
+  };
+  const query = /* GraphGL */ `
+    query SearchAll {
+      events(filters: {
+        createdAt: {
+          gt: "${time}"
+        }
+      }) {
+        data {
+          id
+          attributes {
+            title
+            description
+            date {
+              day month year
+            }
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            category {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
+          }
+        }
+      }
+
+      methodResources(filters: {
+        createdAt: {
+          gt: "${time}"
+        }
+      }) {
+        data {
+          id
+          attributes {
+            title
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
+            description
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      books(filters: {
+        createdAt: {
+          gt: "${time}"
+        }
+      }) {
+        data {
+          id
+          attributes {
+            title
+            section {
+              data {
+                attributes {
+                  slug
+                  title
+                }
+              }
+            }
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      projects(filters: {
+        createdAt: {
+          gt: "${time}"
+        }
+      }) {
+        data {
+          id
+          attributes {
+            title
+            description
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+
+      news(filters: {
+        createdAt: {
+          gt: "${time}"
+        }
+      }) {
+        data {
+          id
+          attributes {
+            title
+            image {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            date
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Last Content'");
+  }
+
+  const json = (await res.json()) as { data: SearchAll };
+
+  const data = SearchAll.parse(json.data);
+
+  return data;
+};

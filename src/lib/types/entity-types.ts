@@ -443,3 +443,9 @@ export const SearchAll = z.object({
   }),
 });
 export type SearchAll = z.infer<typeof SearchAll>;
+
+export const SubscribedDescription = z.object({
+  subscribed: z.any(),
+  not_subscribed: z.any(),
+})
+export type SubscribedDescription = z.infer<typeof SubscribedDescription> 
