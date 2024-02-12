@@ -8,7 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 import { ThemeToggle } from "../providers/ThemeToggle";
 import { getMainPage } from "@/lib/queries/main";
 import SearchDrawer from "../search/SearchDrawer";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { getServerSession } from "next-auth";
 import { AccountBar, SignInButton } from "../auth/AuthButtons";
 
