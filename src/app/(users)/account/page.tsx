@@ -1,5 +1,4 @@
 import React from 'react'
-import { authOptions } from '../api/auth/[...nextauth]/auth';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import SubscribedButton from './SubscribedButton';
@@ -8,6 +7,7 @@ import { getSubscribedDescription, getUserInfo } from '@/lib/queries/users';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import LastContent from './LastContent';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 export const dynamic = 'force-dynamic'
 

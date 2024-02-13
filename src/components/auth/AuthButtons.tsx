@@ -32,7 +32,7 @@ export function AccountBar({
                     </Avatar>
                 </DropdownMenuTrigger>
             
-                <DropdownMenuContent className="w-56 font-Raleway rounded-xl">
+                <DropdownMenuContent className="w-max max-w-xs font-Raleway rounded-xl">
                     <DropdownMenuLabel className='break-words sm:text-sm text-xs'>{name}</DropdownMenuLabel>
 
                     <DropdownMenuSeparator />
@@ -40,6 +40,17 @@ export function AccountBar({
                     <DropdownMenuGroup>
                         <Link href={`/account`} passHref>
                             <DropdownMenuItem className='py-3 cursor-pointer rounded-[0.5rem]'>Личный кабинет</DropdownMenuItem>
+                        </Link>
+                    </DropdownMenuGroup>
+
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuGroup>
+                        <Link href={`/suggest`} passHref>
+                            <DropdownMenuItem className='py-3 cursor-pointer rounded-[0.5rem]'>Предложить публикацию</DropdownMenuItem>
+                        </Link>
+                        <Link href={`/feedback`} passHref>
+                            <DropdownMenuItem className='py-3 cursor-pointer rounded-[0.5rem]'>Обратная связь</DropdownMenuItem>
                         </Link>
                     </DropdownMenuGroup>
 

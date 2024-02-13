@@ -1,10 +1,10 @@
 import LogInForm from '@/components/auth/LogInForm'
 import { getServerSession } from 'next-auth';
 import React from 'react'
-import { authOptions } from '../api/auth/[...nextauth]/auth';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import RegisterForm from '@/components/auth/RegisterForm';
 import { redirect } from 'next/navigation';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 export default async function LogIn() {
     
