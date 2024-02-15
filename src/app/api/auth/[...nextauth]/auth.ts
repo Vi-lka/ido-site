@@ -111,6 +111,7 @@ export const authOptions: AuthOptions = {
         session.user.confirmed = token.confirmed
         session.user.blocked = token.blocked
         session.user.subscribed = token.subscribed
+
         return Promise.resolve(session);
       },
     }

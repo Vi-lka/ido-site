@@ -28,7 +28,7 @@ export default function RegisterForm() {
       email: z
         .string({
           required_error: "Это поле является обязательным",
-        }),
+        }).email({ message: "Неверный адрес электронной почты" }),
       password: z
         .string({
           required_error: "Это поле является обязательным",
@@ -157,7 +157,7 @@ export default function RegisterForm() {
             />
             <div className="mt-6 flex flex-col items-center justify-end sm:flex-row">
               <Button
-                disabled={!(form.formState.isDirty && form.formState.isValid)}
+                disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
                 type="submit"
                 className="mb-6 px-10 py-6 text-sm uppercase sm:mb-0"
               >

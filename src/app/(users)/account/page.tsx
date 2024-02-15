@@ -22,6 +22,8 @@ export default async function Account() {
         getSubscribedDescription()
     ]);
 
+    console.log(userInfo)
+
     return (
         <main className="flex flex-col gap-1 mt-24 mx-auto h-full w-[95%] md:w-[85%] px-4 max-w-[2000px]">
             <div className='flex lg:flex-row flex-col justify-between gap-3 items-start font-Raleway'>

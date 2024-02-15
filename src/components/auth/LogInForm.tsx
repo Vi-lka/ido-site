@@ -57,7 +57,7 @@ export default function LogInForm() {
       console.log(error)
 
       const errorMessage = 
-        `${error}` === "Error: Your account email is not confirmed" 
+        `${error}` === "Error: Your account email is not confirmed"
           ? "Адрес вашей электронной почты не подтвержден"
           : `${error}` === "Error: Invalid identifier or password"
             ? "Неверный логин или пароль"
@@ -139,7 +139,7 @@ export default function LogInForm() {
               Сбросить пароль
             </Link>
             <Button
-              disabled={!(form.formState.isDirty && form.formState.isValid)}
+              disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}
               type="submit"
               className="mb-6 px-10 py-6 text-sm uppercase sm:mb-0"
             >

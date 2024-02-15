@@ -79,6 +79,9 @@ export default function BlocksRendererStrapi({
 }: {
     content: any
 }) {
+
+  if (!content) return null
+  
   return (
     <BlocksRenderer 
         content={content as RootNode[]}

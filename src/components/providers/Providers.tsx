@@ -5,19 +5,22 @@ import { Provider } from "jotai";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { ThemeProviderProps } from "next-themes/dist/types";
+import { ReactQueryProvider } from "./ReactQueryProvider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider>
       <AuthProvider>
-        <ThemeProvider 
-            attribute="class" 
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <ReactQueryProvider>
+          <ThemeProvider 
+              attribute="class" 
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ReactQueryProvider>
       </AuthProvider>
     </Provider>
   );

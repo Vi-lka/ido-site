@@ -449,3 +449,10 @@ export const SubscribedDescription = z.object({
   not_subscribed: z.any(),
 })
 export type SubscribedDescription = z.infer<typeof SubscribedDescription> 
+
+export const SuggestDescription = z.object({
+  description_long: z.any(),
+  description_short: z.string().nullable(),
+  suggestExist: z.any(),
+})
+export type SuggestDescription = z.infer<typeof SuggestDescription> 
