@@ -8,14 +8,33 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import React, { Suspense } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import { SuggestFormT } from "../../../lib/types/mutations";
 import { useSuggest } from '@/lib/mutations/forms';
 
-const EditorComp = dynamic(() => import('@/components/EditorComponent'), { ssr: false })
+const EditorComp = dynamic(() => import('@/components/EditorComponent'), { 
+  ssr: false,
+  loading: () => <Loader2 className='animate-spin w-8 h-8 mx-auto' />,
+})
 
 type Types = "events" | "methodological" | "library" | "news" | "projects" | undefined
+
+function EnumField({ type, disabled }: { type: Types, disabled: boolean }) {
+  const ENUM_FIELDS = {
+    events: <DateSelectCustom name="date" placeholder='Выберите дату' disabled={disabled} fromYear={1000} className='font-Raleway w-full px-5 py-6 shadow dark:border-foreground/50' />,
+    methodological: null,
+    library: null,
+    news: <DateSelectCustom name="date" placeholder='Выберите дату' disabled={disabled} fromYear={2000} className='font-Raleway w-full px-5 py-6 shadow dark:border-foreground/50' />,
+    projects: null
+  };
+
+  if (!type) return null
+
+  return (
+    <div>{ENUM_FIELDS[type]}</div>
+  );
+}
 
 export default function SuggestForm({
   token,
@@ -24,22 +43,6 @@ export default function SuggestForm({
 }) {
 
   const [type, setType] = React.useState<Types>()
-
-  function EnumField({ type, disabled }: { type: Types, disabled: boolean }) {
-    const ENUM_FIELDS = {
-      events: <DateSelectCustom name="date" placeholder='Выберите дату' disabled={disabled} fromYear={1000} className='font-Raleway w-full px-5 py-6 shadow dark:border-foreground/50' />,
-      methodological: null,
-      library: null,
-      news: <DateSelectCustom name="date" placeholder='Выберите дату' disabled={disabled} fromYear={2000} className='font-Raleway w-full px-5 py-6 shadow dark:border-foreground/50' />,
-      projects: null
-    };
-
-    if (!type) return null
-
-    return (
-      <div>{ENUM_FIELDS[type]}</div>
-    );
-  }
   
   const form = useForm<SuggestFormT>({
     resolver: zodResolver(SuggestFormT),
@@ -117,10 +120,8 @@ export default function SuggestForm({
 
         <div className=' mt-8'>
             <p className='text-sm mb-2'>Текст</p>
-            <Suspense fallback={<Loader2 className='animate-spin w-8 h-8 mx-auto' />}>
-              <EditorComp valueName='text' markdown={""} />
-              <FormMessage />
-            </Suspense>
+            <EditorComp valueName='text' markdown={""} />
+            <FormMessage />
         </div>
 
         <div className="mt-6 flex flex-col-reverse items-center justify-between sm:flex-row">

@@ -27,5 +27,13 @@ export const SuggestFormT = z.object({
       });
     }
 });
-
 export type SuggestFormT = z.infer<typeof SuggestFormT>;
+
+export const FeedbackFormT = z.object({
+  text: z.string({
+    required_error: "Это поле является обязательным",
+  }).min(1, {
+    message: "Длина должна составлять 1 или более символов",
+  }),
+})
+export type FeedbackFormT = z.infer<typeof FeedbackFormT>;

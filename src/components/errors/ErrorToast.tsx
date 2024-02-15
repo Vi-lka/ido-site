@@ -39,7 +39,7 @@ export default function ErrorToast({
       title: "Ошибка! Что-то пошло не так:",
       description: (
         <p>
-          In {place}: {getShortDescription(messageError)}
+          В {place}: {getShortDescription(messageError)}
         </p>
       ),
       className: "font-Raleway",

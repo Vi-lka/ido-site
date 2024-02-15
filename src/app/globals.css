@@ -144,6 +144,29 @@ html.dark .logo-svg path {
   min-height: 300px;
 }
 
+.mdxeditor-toolbar {
+  position: sticky;
+  top: 150px !important;
+}
+
+@media (min-width: 1322px) {
+  .mdxeditor-toolbar {
+    top: 110px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mdxeditor-toolbar {
+    top: 110px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .mdxeditor-toolbar {
+    top: 80px !important;
+  }
+}
+
 /* .mdxeditor-toolbar,
 .mdxeditor-toolbar button,
 .mdxeditor-select-trigger,

@@ -455,4 +455,11 @@ export const SuggestDescription = z.object({
   description_short: z.string().nullable(),
   suggestExist: z.any(),
 })
-export type SuggestDescription = z.infer<typeof SuggestDescription> 
+export type SuggestDescription = z.infer<typeof SuggestDescription>
+
+export const FeedbackDescription = z.object({
+  description_long: z.any(),
+  description_short: z.string().nullable(),
+  feedbackExist: z.any(),
+})
+export type FeedbackDescription = z.infer<typeof FeedbackDescription> 
