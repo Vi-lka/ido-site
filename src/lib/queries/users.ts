@@ -1,29 +1,4 @@
-import { FeedbackDescription, SubscribedDescription, SuggestDescription } from "../types/entity-types";
-
-type User = {
-    id: number,
-    username: string,
-    email: string,
-    confirmed: boolean,
-    blocked: boolean,
-    subscribed: boolean,
-    suggest: {
-      data: {
-        id: number
-        attributes: {
-          publishedAt: string | null
-        }
-      } | null
-    },
-    feedback: {
-      data: {
-        id: number
-        attributes: {
-          publishedAt: string | null
-        }
-      } | null
-    }
-}
+import { FeedbackDescription, Policy, SubscribedDescription, SuggestDescription, User } from "../types/entity-types";
 
 export const getUserInfo = async (token: string): Promise<User> => {
     const headers = { 
@@ -80,13 +55,15 @@ export const getUserInfo = async (token: string): Promise<User> => {
         me: User
       };
     };
+
+    const data = User.parse(json.data.me);
   
-    return json.data.me;
+    return data;
 };
 
 
 export const getSubscribedDescription = async (): Promise<SubscribedDescription> => {
-  const headers = { 
+  const headers = {
     "Content-Type": "application/json"
   };
   const query = /* GraphGL */ `
@@ -239,6 +216,63 @@ export const getFeedbackDescription = async (): Promise<FeedbackDescription> => 
   };
 
   const data = FeedbackDescription.parse(json.data.feedbackDescription.data.attributes);
+
+  return data;
+};
+
+export const getPolicy = async (): Promise<Policy> => {
+  const headers = { 
+    "Content-Type": "application/json"
+  };
+  const query = /* GraphGL */ `
+    query getPolicy {
+      policy {
+        data {
+          attributes {
+            file {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`, {
+    headers,
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    next: {
+      tags: ["strapi"],
+      // Next.js issue: if fetch in the component, not on the page, the cache is always MISS with tags, but with Time-based Revalidation both works correctly
+      revalidate: 60,
+    },
+  });
+
+  if (!res.ok) {
+    // Log the error to an error reporting service
+    const err = await res.text();
+    console.log(err);
+    // Throw an error
+    throw new Error("Failed to fetch data 'Policy'");
+  }
+
+  const json = (await res.json()) as {
+    data: {
+      policy: {
+        data: {
+          attributes: Policy
+        };
+      };
+    };
+  };
+
+  const data = Policy.parse(json.data.policy.data.attributes);
 
   return data;
 };

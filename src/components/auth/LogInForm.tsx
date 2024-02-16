@@ -135,8 +135,8 @@ export default function LogInForm() {
             )}
           />
           <div className="mt-6 flex flex-col-reverse items-center justify-between sm:flex-row">
-            <Link href={`/reset`} className="text-sm underline hover:text-primary transition-all">
-              Сбросить пароль
+            <Link href={`/forgotpass`} className="text-sm underline hover:text-primary transition-all">
+              Забыли пароль?
             </Link>
             <Button
               disabled={!(form.formState.isDirty && form.formState.isValid) || form.formState.isSubmitting}

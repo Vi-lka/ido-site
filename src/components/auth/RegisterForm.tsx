@@ -12,8 +12,21 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
-export default function RegisterForm() {
+export default function RegisterForm({
+  policy
+}: {
+  policy: PromiseSettledResult<{
+    file: {
+        data: {
+            attributes: {
+                url: string;
+            };
+        } | null;
+    };
+  }>
+}) {
 
     const [showPassword, setShowPassword] = useState(false)
 
@@ -167,6 +180,11 @@ export default function RegisterForm() {
                 }
               </Button>
             </div>
+            {(policy.status !== "rejected" && policy.value.file.data) && (
+              <p className='sm:text-sm text-xs sm:mt-6 text-right'>
+                Нажимая «Зарегистрироваться», вы соглашаетесь с нашей <Link href={policy.value.file.data.attributes.url} target='__blank' className='underline hover:text-primary transition-all'>Политикой конфиденциальности</Link>.
+              </p>
+            )}
           </form>
         </Form>
       </div>

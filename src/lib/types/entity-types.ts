@@ -463,3 +463,41 @@ export const FeedbackDescription = z.object({
   feedbackExist: z.any(),
 })
 export type FeedbackDescription = z.infer<typeof FeedbackDescription> 
+
+export const User = z.object({
+  id: z.string().or(z.number()),
+  username: z.string(),
+  email: z.string(),
+  confirmed: z.boolean(),
+  blocked: z.boolean(),
+  subscribed: z.string(),
+  suggest: z.object({
+    data: z.object({
+      id: z.number(),
+      attributes: z.object({
+        publishedAt: z.string().nullable()
+      })
+    }).nullable()
+  }),
+  feedback: z.object({
+    data: z.object({
+      id: z.number(),
+      attributes: z.object({
+        publishedAt: z.string().nullable()
+      })
+    }).nullable()
+  })
+})
+export type User = z.infer<typeof User>
+
+
+export const Policy = z.object({
+  file: z.object({
+    data: z.object({
+      attributes: z.object({
+        url: z.string()
+      })
+    }).nullable()
+  }),
+})
+export type Policy = z.infer<typeof Policy> 

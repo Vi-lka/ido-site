@@ -5,12 +5,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import RegisterForm from '@/components/auth/RegisterForm';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
+import { getPolicy } from '@/lib/queries/users';
 
 export default async function LogIn() {
     
     const session = await getServerSession(authOptions);
 
     if (session) redirect("/account")
+
+    const [ policy ] = await Promise.allSettled([ getPolicy() ]);
 
     return (
         <main className="flex flex-col gap-1 mt-16 mx-auto h-full w-[95%] md:w-[85%] px-4 max-w-[2000px]">
@@ -33,7 +36,7 @@ export default async function LogIn() {
                     <LogInForm />
                 </TabsContent>
                 <TabsContent value="register" className='max-w-md lg:w-1/2 w-[90%] mx-auto lg:mt-10'>
-                    <RegisterForm />
+                    <RegisterForm policy={policy} />
                 </TabsContent>
             </Tabs>
         </main>

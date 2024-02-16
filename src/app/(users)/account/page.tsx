@@ -44,7 +44,7 @@ export default async function Account() {
                         : (
                             <div className='lg:w-1/2 w-full lg:mt-0 mt-8'>
                                 <div className='font-Raleway text-base'>
-                                    {userInfo.value.subscribed
+                                    {userInfo.value.subscribed === 'true'
                                         ? (
                                             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                                             <BlocksRendererStrapi content={subscribedDescription.value.subscribed} />
@@ -55,12 +55,12 @@ export default async function Account() {
                                         )
                                     }
                                 </div>
-                                <SubscribedButton token={decrypt(session.jwt)} isSubscribed={userInfo.value.subscribed} className='mt-6' />
+                                <SubscribedButton token={decrypt(session.jwt)} isSubscribed={userInfo.value.subscribed === 'true'} className='mt-6' />
                             </div>
                         )
                 }
             </div>
-            {(userInfo.status !== "rejected") && (userInfo.value.subscribed) 
+            {(userInfo.status !== "rejected") && (userInfo.value.subscribed === 'true') 
                 ? <LastContent className='mt-12' />
                 : null
             }
