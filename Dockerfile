@@ -41,6 +41,8 @@ ENV NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
 
 RUN pnpm install 
 
+RUN pnpm i -g --config.arch=x64 --config.platform=linux --config.libc=glibc sharp
+
 # Build Next.js based on the preferred package manager
 RUN pnpm build
 
