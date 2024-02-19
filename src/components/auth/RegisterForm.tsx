@@ -17,15 +17,7 @@ import Link from 'next/link';
 export default function RegisterForm({
   policy
 }: {
-  policy: PromiseSettledResult<{
-    file: {
-        data: {
-            attributes: {
-                url: string;
-            };
-        } | null;
-    };
-  }>
+  policy: string | undefined
 }) {
 
     const [showPassword, setShowPassword] = useState(false)
@@ -180,9 +172,9 @@ export default function RegisterForm({
                 }
               </Button>
             </div>
-            {(policy.status !== "rejected" && policy.value.file.data) && (
+            {!!policy && (
               <p className='sm:text-sm text-xs sm:mt-6 text-right'>
-                Нажимая «Зарегистрироваться», вы соглашаетесь с нашей <Link href={policy.value.file.data.attributes.url} target='__blank' className='underline hover:text-primary transition-all'>Политикой конфиденциальности</Link>.
+                Нажимая «Зарегистрироваться», вы соглашаетесь с нашей <Link href={policy} target='__blank' className='underline hover:text-primary transition-all'>Политикой конфиденциальности</Link>.
               </p>
             )}
           </form>

@@ -15,6 +15,8 @@ export default async function LogIn() {
 
     const [ policy ] = await Promise.allSettled([ getPolicy() ]);
 
+    const policyFile = (policy.status !== "rejected" && policy.value.file.data) ? policy.value.file.data.attributes.url : undefined
+
     return (
         <main className="flex flex-col gap-1 mt-16 mx-auto h-full w-[95%] md:w-[85%] px-4 max-w-[2000px]">
             <Tabs defaultValue="login" className="w-full font-Raleway">
@@ -36,7 +38,7 @@ export default async function LogIn() {
                     <LogInForm />
                 </TabsContent>
                 <TabsContent value="register" className='max-w-md lg:w-1/2 w-[90%] mx-auto lg:mt-10'>
-                    <RegisterForm policy={policy} />
+                    <RegisterForm policy={policyFile} />
                 </TabsContent>
             </Tabs>
         </main>
