@@ -473,7 +473,7 @@ export const User = z.object({
   subscribed: z.string(),
   suggest: z.object({
     data: z.object({
-      id: z.number(),
+      id: z.string().or(z.number()),
       attributes: z.object({
         publishedAt: z.string().nullable()
       })
@@ -481,7 +481,7 @@ export const User = z.object({
   }),
   feedback: z.object({
     data: z.object({
-      id: z.number(),
+      id: z.string().or(z.number()),
       attributes: z.object({
         publishedAt: z.string().nullable()
       })
