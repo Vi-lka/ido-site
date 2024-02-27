@@ -19,9 +19,9 @@ export default function NavSheet() {
       <SheetContent>
         <NavigationMenu orientation="vertical" className="mx-auto">
           <NavigationMenuList className="flex flex-col items-center">
-            <ScrollArea className="font-Raleway mt-[2vh] h-[72vh] w-full p-1">
+            <ScrollArea className="font-Raleway mt-[2vh] h-[90vh] w-full p-1">
                 <SheetMenuItem text={'Главная'} url={'/'} />
-                <SheetMenuItem text={'События'} url={'/events'} />
+                <SheetMenuItem text={'День в истории края'} url={'/events'} />
                 <SheetMenuItem text={'Методические ресурсы'} url={'/methodological'} />
                 <SheetMenuItem text={'Библиотека'} url={'/library'} />
                 <SheetMenuItem text={'Новости'} url={'/news'} />

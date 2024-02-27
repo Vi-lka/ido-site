@@ -1,5 +1,4 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getFeedbackDescription, getUserInfo } from '@/lib/queries/users';
@@ -8,6 +7,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import FeedbackForm from './FeedbackForm';
+import Markdown from '@/components/Markdown';
 
 export default async function Feedback() {
 
@@ -40,8 +40,7 @@ export default async function Feedback() {
                 : feedbackDescription.value.feedbackExist ?
                 (
                     <div className='mb-6 font-Raleway text-sm'>
-                        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-                        <BlocksRendererStrapi content={feedbackDescription.value.feedbackExist}/>
+                        <Markdown markdown={feedbackDescription.value.feedbackExist} />
                     </div>
                 )
                 : <ErrorHandler
@@ -64,8 +63,7 @@ export default async function Feedback() {
                     />
                 : (
                     <div className='mb-6 font-Raleway text-sm'>
-                        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-                        <BlocksRendererStrapi content={feedbackDescription.value.description_long}/>
+                        <Markdown markdown={feedbackDescription.value.description_long} />
                     </div>
                 )
             }

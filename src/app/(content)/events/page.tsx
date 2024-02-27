@@ -33,13 +33,12 @@ export default async function EventsPage({
     <div className="w-full mb-4 mt-10 gap-4 flex justify-between items-center pb-4 border-b-2 border-foreground">
       <div className='flex flex-col gap-3'>
         <h1 className="text-foreground lg:text-4xl sm:text-3xl text-2xl font-NotoSerif font-bold">
-          События
+          День в истории края
         </h1>
         {(pageDescriptions.status !== "rejected" && pageDescriptions.value.events) && (
           <p className='font-Raleway sm:text-sm text-xs sm:text-left text-justify'>{pageDescriptions.value.events.short}</p>
         )}
       </div>
-      {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
       {(pageDescriptions.status !== "rejected" && pageDescriptions.value.events?.full) && <PageDescriptions data={pageDescriptions.value.events.full} />}
     </div>
     {tabsData

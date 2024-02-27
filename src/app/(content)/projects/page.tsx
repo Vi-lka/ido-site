@@ -25,7 +25,6 @@ export default async function ProjectsPage({
             <p className='font-Raleway sm:text-sm text-xs sm:text-left text-justify'>{pageDescriptions.value.projects.short}</p>
           )}
         </div>
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         {(pageDescriptions.status !== "rejected" && pageDescriptions.value.projects?.full) && <PageDescriptions data={pageDescriptions.value.projects.full} />}
       </div>
 

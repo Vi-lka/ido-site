@@ -56,7 +56,6 @@ export function useSuggest(access_token: string) {
   const mutation = useMutation({
     mutationKey: ["createSuggest", requestHeaders],
     mutationFn: async (value: SuggestFormT): Promise<SuggestReturn> => {
-      const textNoLines = value.text.replace(/(?:\r\n|\r|\n)/g, '\\n').replace(/"/g, "'")
       return request(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`,
         mutationString,
@@ -64,7 +63,7 @@ export function useSuggest(access_token: string) {
           data: {
             type: value.type,
             title: value.title,
-            text: textNoLines,
+            text: value.text,
             date: value.date?.toLocaleDateString("ru")
           }
         },
@@ -154,13 +153,12 @@ export function useFeedback(access_token: string) {
   const mutation = useMutation({
     mutationKey: ["createFeedback", requestHeaders],
     mutationFn: async (value: FeedbackFormT): Promise<FeedbackReturn> => {
-      const textNoLines = value.text.replace(/(?:\r\n|\r|\n)/g, '\\n').replace(/"/g, "'")
       return request(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`,
         mutationString,
         {
           data: {
-            text: textNoLines
+            text: value.text
           }
         },
         requestHeaders,

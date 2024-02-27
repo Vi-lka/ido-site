@@ -1,5 +1,4 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getSuggestDescription, getUserInfo } from '@/lib/queries/users';
@@ -8,6 +7,7 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import SuggestForm from './SuggestForm';
 import { decrypt } from '@/lib/utils';
+import Markdown from '@/components/Markdown';
 
 export default async function Suggest() {
 
@@ -40,8 +40,7 @@ export default async function Suggest() {
                 : suggestDescription.value.suggestExist ?
                 (
                     <div className='mb-6 font-Raleway text-sm'>
-                        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-                        <BlocksRendererStrapi content={suggestDescription.value.suggestExist}/>
+                        <Markdown markdown={suggestDescription.value.suggestExist} />
                     </div>
                 )
                 : <ErrorHandler
@@ -64,8 +63,7 @@ export default async function Suggest() {
                     />
                 : (
                     <div className='mb-6 font-Raleway text-sm'>
-                        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-                        <BlocksRendererStrapi content={suggestDescription.value.description_long}/>
+                        <Markdown markdown={suggestDescription.value.description_long} />
                     </div>
                 )
             }

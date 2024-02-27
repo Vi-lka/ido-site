@@ -82,7 +82,7 @@ export default function SuggestForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className='font-Raleway'>
-                  <SelectItem className='cursor-pointer' value="events">События</SelectItem>
+                  <SelectItem className='cursor-pointer' value="events">День в истории края</SelectItem>
                   <SelectItem className='cursor-pointer' value="methodological">Методические ресурсы</SelectItem>
                   <SelectItem className='cursor-pointer' value="library">Библиотека</SelectItem>
                   <SelectItem className='cursor-pointer' value="news">Новости</SelectItem>

@@ -29,7 +29,6 @@ export default async function NewsPage({
           <p className='font-Raleway sm:text-sm text-xs sm:text-left text-justify'>{pageDescriptions.value.news.short}</p>
         )}
       </div>
-      {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
       {(pageDescriptions.status !== "rejected" && pageDescriptions.value.news?.full) && <PageDescriptions data={pageDescriptions.value.news.full} />}
     </div>
 

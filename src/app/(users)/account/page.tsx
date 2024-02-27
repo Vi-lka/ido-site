@@ -5,9 +5,9 @@ import SubscribedButton from './SubscribedButton';
 import { decrypt } from '@/lib/utils';
 import { getSubscribedDescription, getUserInfo } from '@/lib/queries/users';
 import ErrorHandler from '@/components/errors/ErrorHandler';
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import LastContent from './LastContent';
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
+import Markdown from '@/components/Markdown';
 
 export const dynamic = 'force-dynamic'
 
@@ -46,12 +46,10 @@ export default async function Account() {
                                 <div className='font-Raleway text-base'>
                                     {userInfo.value.subscribed === 'true'
                                         ? (
-                                            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                                            <BlocksRendererStrapi content={subscribedDescription.value.subscribed} />
+                                            <Markdown markdown={subscribedDescription.value.subscribed} />
                                         )
                                         : (
-                                            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                                            <BlocksRendererStrapi content={subscribedDescription.value.not_subscribed} />
+                                            <Markdown markdown={subscribedDescription.value.not_subscribed} />
                                         )
                                     }
                                 </div>

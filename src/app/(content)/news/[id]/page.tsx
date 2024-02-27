@@ -1,5 +1,5 @@
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import GoBackButton from '@/components/GoBackButton';
+import Markdown from '@/components/Markdown';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
 import PhotoZoom from '@/components/content/PhotoZoom';
 import ErrorHandler from '@/components/errors/ErrorHandler';
@@ -64,8 +64,7 @@ export default async function NewsSingle({
 
         {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
-            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-            <BlocksRendererStrapi content={dataResult.value.attributes.text} />
+            <Markdown markdown={dataResult.value.attributes.text} />
           </div>
         )}
       </div>

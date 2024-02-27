@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getEventByID } from '@/lib/queries/events';
 import React from 'react'
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import GoBackButton from '@/components/GoBackButton';
 import Link from 'next/link';
 import PhotoZoom from '@/components/content/PhotoZoom';
 import PhotoSlider from '@/components/content/PhotoSlider';
 import { getDateName } from '@/lib/utils';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
+import Markdown from '@/components/Markdown';
 
 export default async function EventSingle({
   params: { id },
@@ -102,7 +101,7 @@ export default async function EventSingle({
 
         {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
-            <BlocksRendererStrapi content={dataResult.value.attributes.text} />
+            <Markdown markdown={dataResult.value.attributes.text} />
           </div>
         )}
       </div>

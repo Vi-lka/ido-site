@@ -42,7 +42,7 @@ export default async function SearchContent({
   const projectsCount = dataResult.value.projects.data.length
 
   const tabs = [
-    {value: "events", name: "События", count: eventsCount},
+    {value: "events", name: "День в истории края", count: eventsCount},
     {value: "methodResources", name: "Методические ресурсы", count: methodResourcesCount},
     {value: "books", name: "Библиотека", count: booksCount},
     {value: "news", name: "Новости", count: newsCount},

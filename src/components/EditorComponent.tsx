@@ -1,4 +1,3 @@
-
 'use client'
 
 import '@mdxeditor/editor/style.css'

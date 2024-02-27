@@ -22,7 +22,7 @@ export default async function Events() {
   return (
     <section className="flex flex-col lg:gap-12 gap-6 mt-12 mx-auto w-[95%] md:w-[85%] px-4 max-w-[2000px]">
       <h3 className="font-NotoSerif font-semibold lg:text-3xl text-2xl">
-        События
+        День в истории края
       </h3>
       <div className="grid items-start gap-6 w-full lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
         {dataResult.value.data.map(item => {

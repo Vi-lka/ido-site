@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import { getProjectByID } from '@/lib/queries/projects';
 import React from 'react'
@@ -6,7 +5,7 @@ import GoBackButton from '@/components/GoBackButton';
 import PhotoZoom from '@/components/content/PhotoZoom';
 import PhotoSlider from '@/components/content/PhotoSlider';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
+import Markdown from '@/components/Markdown';
 
 export default async function MethodologicalSingle({
   params: { id },
@@ -68,7 +67,7 @@ export default async function MethodologicalSingle({
 
         {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
-            <BlocksRendererStrapi content={dataResult.value.attributes.text} />
+            <Markdown markdown={dataResult.value.attributes.text} />
           </div>
         )}
       </div>

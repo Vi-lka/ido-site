@@ -30,7 +30,7 @@ export type ImagesArray = z.infer<typeof ImagesArray>;
 export const RichTextComp = z.object({
   __typename: z.literal("ComponentCustomRichText"),
   title: z.string().nullable(),
-  text: z.any(),
+  text: z.string().nullable(),
 })
 export type RichTextComp = z.infer<typeof RichTextComp>;
 
@@ -80,7 +80,7 @@ export type DynamicZoneT = z.infer<typeof DynamicZoneT>;
 export const DescriptionComp = z.object({
   __typename: z.literal("ComponentCustomDescription"),
   short: z.string().nullable(),
-  full: z.any(),
+  full: z.string().nullable(),
 })
 export type DescriptionComp = z.infer<typeof DescriptionComp>;
 
@@ -125,7 +125,7 @@ export const Section = z.object({
     title: z.string(),
     image: Image,
     description: z.string().nullable(),
-    text: z.any()
+    text: z.string().nullable()
   }),
 });
 export type Section = z.infer<typeof Section>;
@@ -178,7 +178,7 @@ export const Event = z.object({
     category: z.object({
       data: EventsCategory.nullable()
     }),
-    text: z.any(),
+    text: z.string().nullable(),
     content: DynamicZoneT.array()
   }),
 });
@@ -223,7 +223,7 @@ export const Book = z.object({
       }).nullable()
     }),
     image: Image,
-    text: z.any().nullable(),
+    text: z.string().nullable(),
     file: Image,
     content: DynamicZoneT.array()
   }),
@@ -308,7 +308,7 @@ export const NewsSingle = z.object({
     title: z.string(),
     image: Image,
     date: z.string(),
-    text: z.any(),
+    text: z.string().nullable(),
     content: DynamicZoneT.array()
   }),
 });
@@ -339,7 +339,7 @@ export const ProjectSingle = z.object({
     description: z.string(),
     image: Image,
     additionalImages: ImagesArray,
-    text: z.any(),
+    text: z.string().nullable(),
     content: DynamicZoneT.array()
   }),
 });
@@ -445,22 +445,22 @@ export const SearchAll = z.object({
 export type SearchAll = z.infer<typeof SearchAll>;
 
 export const SubscribedDescription = z.object({
-  subscribed: z.any(),
-  not_subscribed: z.any(),
+  subscribed: z.string().nullable(),
+  not_subscribed: z.string().nullable(),
 })
 export type SubscribedDescription = z.infer<typeof SubscribedDescription> 
 
 export const SuggestDescription = z.object({
-  description_long: z.any(),
+  description_long: z.string().nullable(),
   description_short: z.string().nullable(),
-  suggestExist: z.any(),
+  suggestExist: z.string().nullable(),
 })
 export type SuggestDescription = z.infer<typeof SuggestDescription>
 
 export const FeedbackDescription = z.object({
-  description_long: z.any(),
+  description_long: z.string().nullable(),
   description_short: z.string().nullable(),
-  feedbackExist: z.any(),
+  feedbackExist: z.string().nullable(),
 })
 export type FeedbackDescription = z.infer<typeof FeedbackDescription> 
 

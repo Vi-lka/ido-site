@@ -1,12 +1,12 @@
 import ErrorHandler from '@/components/errors/ErrorHandler';
 import React from 'react'
-import BlocksRendererStrapi from '@/components/BlocksRendererStrapi';
 import { getBookByID } from '@/lib/queries/books';
 import Link from 'next/link';
 import { ArrowUpRightFromSquare } from 'lucide-react';
 import GoBackButton from '@/components/GoBackButton';
 import DynamicZone from '@/components/content/DynamicZone/DynamicZone';
 import PhotoZoom from '@/components/content/PhotoZoom';
+import Markdown from '@/components/Markdown';
 
 export default async function BookSingle({
   params: { id },
@@ -88,8 +88,7 @@ export default async function BookSingle({
 
         {dataResult.value.attributes.text && (
           <div className="font-Raleway lg:mt-6 mb-6">
-            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-            <BlocksRendererStrapi content={dataResult.value.attributes.text} />
+            <Markdown markdown={dataResult.value.attributes.text} />
           </div>
         )}
       </div>

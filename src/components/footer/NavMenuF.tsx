@@ -10,7 +10,7 @@ export default function NavMenu() {
     <NavigationMenu delayDuration={100}>
         <NavigationMenuList className='gap-1 flex-wrap justify-end'>
             <NavMenuItem text={'Главная'} url={'/'} />
-            <NavMenuItem text={'События'} url={'/events'} />
+            <NavMenuItem text={'День в истории края'} url={'/events'} />
             <NavMenuItem text={'Методические ресурсы'} url={'/methodological'} />
             <NavMenuItem text={'Библиотека'} url={'/library'} />
             <NavMenuItem text={'Новости'} url={'/news'} />

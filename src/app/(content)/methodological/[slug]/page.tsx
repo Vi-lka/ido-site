@@ -27,7 +27,6 @@ export default async function MethodologicalSection({
                 <p className='font-Raleway sm:text-sm text-xs sm:text-left text-justify'>{dataResult.value.attributes.description}</p>
             )}
         </div>
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         {(dataResult.status !== "rejected" && dataResult.value.attributes.text) && <PageDescriptions data={dataResult.value.attributes.text} />}
       </div>
 

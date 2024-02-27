@@ -14,7 +14,6 @@ export default function DynamicZone({
   return (
     item.__typename === "ComponentCustomRichText"
       ? (
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         <RichText title={item.title} text={item.text} />
       )
     : item.__typename === "ComponentCustomSlider"

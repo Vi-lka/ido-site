@@ -1,6 +1,6 @@
 import React from 'react'
-import BlocksRendererStrapi from '../../BlocksRendererStrapi'
 import { cn } from '@/lib/utils'
+import Markdown from '@/components/Markdown'
 
 export default function RichText({
     title,
@@ -8,7 +8,7 @@ export default function RichText({
     className,
 }: {
     title: string | null,
-    text: any,
+    text: string | null,
     className?: string,
 }) {
   return (
@@ -18,8 +18,7 @@ export default function RichText({
             {title}
           </h1>
         )}
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-        <BlocksRendererStrapi content={text} />
+        <Markdown markdown={text} />
     </div>
   )
 }

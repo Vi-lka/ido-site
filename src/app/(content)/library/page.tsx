@@ -23,7 +23,6 @@ export default async function LibraryPage({
             <p className='font-Raleway sm:text-sm text-xs sm:text-left text-justify'>{pageDescriptions.value.library.short}</p>
           )}
         </div>
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         {(pageDescriptions.status !== "rejected" && pageDescriptions.value.library?.full) && <PageDescriptions data={pageDescriptions.value.library.full} />}
       </div>
 
